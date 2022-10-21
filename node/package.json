@@ -1,0 +1,28 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webcrunch/inl-python.git"
+  },
+  "keywords": [
+    "Python",
+    "Node.js",
+    "IoT",
+    "Johhny-five"
+  ],
+  "author": "Jarl Lindquist",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/webcrunch/inl-python/issues"
+  },
+  "homepage": "https://github.com/webcrunch/inl-python#readme",
+  "dependencies": {
+    "johnny-five": "^2.1.0"
+  }
+}
