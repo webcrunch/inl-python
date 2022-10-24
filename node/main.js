@@ -21,27 +21,39 @@
 //   });
 // });
 
-const temporal = require("temporal");
-const { Board, Led } = require("johnny-five");
-const board = new Board({ port: "COM5" });
+// const temporal = require("temporal");
+import five from "johnny-five";
+// const { Board, Led } = require("johnny-five");
+// const board = new five.Board({ port: "COM5" });
+// const board = new five.Board();
+// board.on("ready", () => {
+//
+//   let index = 0;
+//   const rainbow = [
+//     "FF0000",
+//     "FF7F00",
+//     "FFFF00",
+//     "00FF00",
+//     "0000FF",
+//     "4B0082",
+//     "8F00FF",
+//   ];
 
-board.on("ready", () => {
-  const rgb = new Led.RGB([6, 5, 3]);
-  let index = 0;
-  const rainbow = [
-    "FF0000",
-    "FF7F00",
-    "FFFF00",
-    "00FF00",
-    "0000FF",
-    "4B0082",
-    "8F00FF",
-  ];
+//   board.loop(1000, () => {
+//     rgb.color(rainbow[index++]);
+//     if (index === rainbow.length) {
+//       index = 0;
+//     }
+//   });
+// });
 
-  board.loop(1000, () => {
-    rgb.color(rainbow[index++]);
-    if (index === rainbow.length) {
-      index = 0;
-    }
-  });
-});
+const blink = () => {
+  //   board.on("ready", () => {
+  //     const rgb = new five.Led.RGB([6, 5, 3]);
+  //     rgb.blink;
+  //   });
+};
+
+export default {
+  blink,
+};
