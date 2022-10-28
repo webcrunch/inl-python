@@ -10,19 +10,47 @@
   </head>
 
   <body>
-    <main class="container mt-5"></main>
-    <button class="button">Click me</button>
+    <main class="container mt-5">
+      <button type="button" class="btn btn-primary btn-lg">
+        Program a series
+      </button>
 
-    <input type="number" min="1" max="10000" class="blink" />
-    <button class="E_blink">Make it blink</button>
+      <div class="d-flex bd-highlight">
+        <div class="p-4 flex-fill bd-highlight">
+          <button type="button" class="E_blink btn btn-primary">
+            Make it blink
+          </button>
+          <div class="slidecontainer">
+            <input
+              type="range"
+              min="1"
+              value="300"
+              max="10000"
+              class="slider"
+            />
+          </div>
+        </div>
+        <div class="p-2 flex-fill bd-highlight">
+          <button type="button" class="chatt btn btn-primary">
+            Chatt with others
+          </button>
 
-    <select name="cars" class="color_chooser">
-      <option value=""></option>
-      <option value="#FF0000">Yellow</option>
-      <option value="#8F00FF">Green</option>
-      <option value="#4B0082">Blue</option>
-      <option value="#FFFF00">Red</option>
-    </select>
+          <button type="button" class="button btn btn-primary">Click me</button>
+          <div>
+            <input type="color" id="head" name="head" value="" />
+            <label for="head">Pick a Color</label>
+          </div>
+          <button type="button" class="colorGetter btn btn-primary">
+            Send Color
+          </button>
+        </div>
+        <div>
+          <ul class="loggs">
+            <li>Fungerar detta - datum</li>
+          </ul>
+        </div>
+      </div>
+    </main>
 
     <script type="text/python" src="main.py"></script>
     <script src="_libs/js/start.js"></script>
