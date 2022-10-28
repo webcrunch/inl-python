@@ -22,9 +22,13 @@ def on_complete(req):
         document["result"].html = "error " + req.text
 
 
+def color_display(e):
+    j("body").css("background-color", j('#head').val())
+
+
 def button_click(e):
     print("Hej")
-    # aio.run(send_get_Data())
+    aio.run(send_get_Data("localhost/test"))
 
 
 def post_command(url, data):
@@ -52,6 +56,7 @@ def log(string):
 
 
 async def send_command(url):
+    print(url)
     response = await (await fetch(url)).json()
     log(response)
 
