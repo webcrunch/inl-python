@@ -3,6 +3,16 @@ from browser import document, ajax
 from datetime import datetime
 from network_brython import send_url
 from dom_io import print as _print, input as _input
+# from pyfirmata import Arduino, util
+from datetime import datetime
+
+from network_brython import connect, send
+
+# board = pyfirmata.Arduino('/ dev/ttyS4')
+# board = Arduino('COM5')
+# firmata_version = board.get_firmata_version()
+# print("Connected to Firmata " +
+#       str(firmata_version[0]) + "." + str(firmata_version[1]))
 
 if w == None:
     quit('Can only be run in a web browser!')
@@ -13,6 +23,13 @@ button = j(".button")
 color_pick_button = j('.colorGetter')
 JSON = w.JSON
 req = ajax.Ajax()
+log_template = j('.loggs')
+chatt_button = j('.chatt')
+enter_room = j('.enter_chatt')
+
+
+def main_connection():
+    connect('blueberry', 'defaultUser1', action_cb)
 
 
 def on_complete(req):
@@ -23,12 +40,38 @@ def on_complete(req):
 
 
 def color_display(e):
-    j("body").css("background-color", j('#head').val())
+    send(j('#head').val())
+    # j("body").css("background-color", j('#head').val())
+
+
+def chatt_cb(time, user, message):
+    # print('time', time, 'user', user, 'message', message) if user is not system else print()
+    write_log(time, message)
+
+
+def action_cb(time, user, message):
+    print('time', time, 'user', user, 'message', message)
+    write_log(time, message)
+
+
+def write_log(time, message):
+    time_string = timestamp_to_iso(time)
+    log_template.append(f'<li>{message}({time_string})</li>')
+
+
+def set_a_log_test(e):
+    j('.disclosed').toggle(200)  # .css("display", "flex")
+    #
 
 
 def button_click(e):
     print("Hej")
-    aio.run(send_get_Data("localhost/test"))
+
+
+# convert timestamp to iso date time format
+def timestamp_to_iso(timestamp):
+    return datetime.fromtimestamp(timestamp / 1000)\
+        .isoformat().replace('T', ' ').split('.')[0]
 
 
 def post_command(url, data):
@@ -46,8 +89,21 @@ def post_command(url, data):
     req.send({'color': data})
 
 
+# def on_message(timestamp, user, message):
+#     print(timestamp, user, message)
+#     write_log(timestamp, message)
+
+def handle_connection(e):
+    name = j('#name').val()
+    room = j('#room').val()
+    connect(room, name, chatt_cb)
+
+
 button.on('click', button_click)
 color_pick_button.on('click', color_display)
+chatt_button.on('click', set_a_log_test)
+enter_room.on('click', handle_connection)
+# j(document).ready(main_connection)
 
 
 def log(string):
@@ -64,105 +120,3 @@ async def send_command(url):
 async def send_get_Data(url):
     api_url = url
     response = await (await fetch(api_url)).json()
-
-
-# ___________________________________________________________ chat from Thomas code
-
-# def timestamp_to_iso(timestamp):
-#     return datetime.fromtimestamp(timestamp / 1000)\
-#         .isoformat().replace('T', ' ').split('.')[0]
-
-# # listen to incoming messages and display them
-
-
-# def on_message(timestamp, user, message):
-#     time_string = timestamp_to_iso(timestamp)
-#     j(f"""
-#         <div class="shown alert alert-primary" role="alert">
-#             <b>{time_string} {user}:</b>
-#             <p>{message}</p>
-#         </div>
-#     """).appendTo('main')
-#     j(window).scrollTop(10000000)  # scroll to bottom
-
-# # send a message
-
-
-# def send_message(e):
-#     e.preventDefault()  # do not reload web page
-#     message = j('form input.message').val()
-#     send(message)
-#     j('form input.message').val('')  # empty input field
-
-# # create a form for input
-
-
-# def create_form():
-#     j("""
-#         <form class="container-fluid p-3 px-5 position-fixed
-#             bottom-0 bg-light">
-#             <div class="input-group">
-#             <input type="text" class="message form-control"
-#                 placeholder="Write a message">
-#             <button class="btn btn-primary"
-#                 type="submit">Send</button>
-#             </div>
-#         </form>
-#     """)\
-#         .appendTo('body')\
-#         .on('submit', send_message)
-
-
-# async def main():
-#     # _print('<h3>Chatten</h3>')
-#     # # connect to channel
-#     # connect(channel, user, on_message)
-#     # j('main').empty()
-#     # create_form()
-
-# aio.run(main())
-
-
-# color_choosed = None
-# color_picker_value = j('.color_chooser')
-# blink_button = j('.E_blink')
-
-
-# # async def button_send(status):
-# #     api_url = "http://localhost/power/" + status
-# #     response = await (await fetch(api_url)).json()
-# #     w.console.log(response)
-
-
-# # def test(ev):
-# #     print(ev)
-# #     aio.run(sendData(j('.color_chooser option:selected').val()))
-
-
-# async def blink_function(ev):
-#     print("eere")
-#     # aio.run()
-
-
-# # on.on('click', button_send('on'))
-# # off.on('click', button_send('off'))
-# # color_picker_value.on('change', test)
-# # color_picker_value.change(function():
-# #     print("Handler for .change() called.")
-
-# blink_button.on('click', blink_function)
-
-
-# # async def sendData(color):
-# #     print(color)
-# #     # api_url = "https://jsonplaceholder.typicode.com/todos/1"
-# #     # response = await (await fetch(api_url)).json()
-# #     response = await(await fetch("http://localhost:5000/color", {
-# #         method: 'POST',
-# #         headers:
-# #             'Content-Type': 'application/json'
-# #             // 'Content-Type': 'application/x-www-form-urlencoded',
-
-# #         body: JSON.stringify({"color": color})
-# #     })).json()
-# #     w.console.log(response)

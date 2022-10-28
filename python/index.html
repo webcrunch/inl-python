@@ -6,17 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <title>Brython Project</title>
+    <title>JL. Python with JS and Audrino</title>
   </head>
 
   <body>
     <main class="container mt-5">
-      <button type="button" class="btn btn-primary btn-lg">
-        Program a series
-      </button>
+      <div class="p-2 d-flex bd-highlight">
+        <!-- <div class="p-1 flex-fill bd-highlight">
+          <button type="button" class="btn btn-primary btn-lg">
+            Program a series
+          </button>
+        </div> -->
 
-      <div class="d-flex bd-highlight">
-        <div class="p-4 flex-fill bd-highlight">
+        <div class="p-2 flex-fill bd-highlight">
           <button type="button" class="E_blink btn btn-primary">
             Make it blink
           </button>
@@ -29,12 +31,6 @@
               class="slider"
             />
           </div>
-        </div>
-        <div class="p-2 flex-fill bd-highlight">
-          <button type="button" class="chatt btn btn-primary">
-            Chatt with others
-          </button>
-
           <button type="button" class="button btn btn-primary">Click me</button>
           <div>
             <input type="color" id="head" name="head" value="" />
@@ -44,10 +40,35 @@
             Send Color
           </button>
         </div>
+        <div class="chatter p-2 flex-fill bd-highlight">
+          <button type="button" class="chatt btn btn-primary">
+            Chatt with others
+          </button>
+          <div class="disclosed p-4 flex-fill bd-highlight">
+            <input
+              type="text"
+              class="disclosed"
+              id="room"
+              name="head"
+              value=""
+            />
+            <label for="room">Room</label><br />
+            <input type="text" id="name" name="head" value="" />
+            <label for="name">Name</label><br />
+            <button class="enter_chatt btn btn-primary">Enter the room</button>
+
+            <div class="roomActive p-4 flex-fill bd-highlight">
+              <input type="text" class="chatt_enabled" value="wite a message" />
+              <div>
+                <button class="btn btn-primary">Display as Morse code</button>
+                <button class="send btn btn-primary">Send chatt</button>
+              </div>
+            </div>
+          </div>
+        </div>
         <div>
-          <ul class="loggs">
-            <li>Fungerar detta - datum</li>
-          </ul>
+          <h3>Every actions</h3>
+          <ul class="loggs"></ul>
         </div>
       </div>
     </main>
