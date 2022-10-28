@@ -17,11 +17,11 @@ if w == None:
 # setting jquery to j
 j = w.jQuery
 fetch = w.fetch
-button = j(".button")
 color_pick_button = j('.colorGetter')
 JSON = w.JSON
 req = ajax.Ajax()
 log_template = j('.loggs')
+init_button = j('init')
 chatt_button = j('.chatt')
 enter_room = j('.enter_chatt')
 blink_button = j('.E_blink')
@@ -68,7 +68,6 @@ def set_a_log_test(e):
 def button_click(e):
     print("Hej")
 
-
 def post_command(url, data):
     log('posting stuff')
     log(data)
@@ -101,7 +100,7 @@ def main_connection():
     # close()
 
 
-button.on('click', button_click)
+init_button.on('click', main_connection)
 color_pick_button.on('click', color_display)
 chatt_button.on('click', set_a_log_test)
 enter_room.on('click', handle_connection)
@@ -123,5 +122,3 @@ async def send_command(url):
 async def send_get_Data(url):
     api_url = url
     response = await (await fetch(api_url)).json()
-
-main_connection()
