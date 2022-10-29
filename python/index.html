@@ -10,68 +10,109 @@
   </head>
 
   <body>
-    <main class="container mt-5">
-      <div class="p-2 d-flex bd-highlight">
-        <!-- <div class="p-1 flex-fill bd-highlight">
-          <button type="button" class="btn btn-primary btn-lg">
-            Program a series
-          </button>
-        </div> -->
-
-        <div class="p-2 flex-fill bd-highlight">
-          <button type="button" class="E_blink btn btn-primary">
-            Make it blink
-          </button>
-          <div class="slidecontainer">
-            <input
-              type="range"
-              min="1"
-              value="300"
-              max="10000"
-              class="slider"
-            />
+    <div class="container-fluid">
+      <h1>Hello mutlipurpose handling</h1>
+      <div class="row">
+        <div class="">
+          <div class="col p-2">
+            <button type="button" class="init btn btn-primary">Connect!</button>
           </div>
-          <button type="button" class="button btn btn-primary">Click me</button>
-          <div>
-            <input type="color" id="head" name="head" value="" />
-            <label for="head">Pick a Color</label>
-          </div>
-          <button type="button" class="colorGetter btn btn-primary">
-            Send Color
-          </button>
         </div>
-        <div class="chatter p-2 flex-fill bd-highlight">
-          <button type="button" class="chatt btn btn-primary">
-            Chatt with others
-          </button>
-          <div class="disclosed p-4 flex-fill bd-highlight">
-            <input
-              type="text"
-              class="disclosed"
-              id="room"
-              name="head"
-              value=""
-            />
-            <label for="room">Room</label><br />
-            <input type="text" id="name" name="head" value="" />
-            <label for="name">Name</label><br />
-            <button class="enter_chatt btn btn-primary">Enter the room</button>
-
-            <div class="roomActive p-4 flex-fill bd-highlight">
-              <input type="text" class="chatt_enabled" value="wite a message" />
-              <div>
-                <button class="btn btn-primary">Display as Morse code</button>
-                <button class="send btn btn-primary">Send chatt</button>
+        <div class="row">
+          <div class="col-sm-12 col-md-4">
+            <div class="col p-2">
+              <p>
+                <a
+                  class="btn btn-primary"
+                  data-bs-toggle="collapse"
+                  href="#collapseExample"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
+                >
+                  Color and actions handling
+                </a>
+              </p>
+              <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                  <button type="button p-2" class="E_blink btn btn-primary">
+                    Make it blink
+                  </button>
+                  <input type="checkbox" id="gradient" name="gradient" />
+                  <label for="gradient">Gradient:</label><br />
+                  <div class="slidecontainer hidden">
+                    <input
+                      type="range"
+                      min="1"
+                      value="300"
+                      max="10000"
+                      class="slider"
+                    />
+                  </div>
+                  <div>
+                    <label for="head">Pick a Color:</label>
+                    <input type="color" id="head" name="head" value="#ff0000" />
+                  </div>
+                  <button type="button" class="colorGetter btn btn-primary">
+                    Send Color
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div>
-          <h3>Every actions</h3>
-          <ul class="loggs"></ul>
+          <div class="col-sm-12 col-md-5">
+            <div class="col p-2">
+              <p>
+                <a
+                  class="btn btn-primary"
+                  data-bs-toggle="collapse"
+                  href="#ChattColpasse"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="ChattColpasse"
+                >
+                  Color and actions handling
+                </a>
+              </p>
+              <div class="collapse" id="ChattColpasse">
+                <div class="card card-body">
+                  <button type="button" class="chatt btn btn-primary">
+                    Chatt with others
+                  </button>
+                  <div>
+                    <input
+                      type="text"
+                      class="disclosed"
+                      id="room"
+                      name="head"
+                      value=""
+                    />
+                    <label for="room" class="disclosed">Room</label><br />
+                    <input
+                      type="text"
+                      class="disclosed"
+                      id="name"
+                      name="head"
+                      value=""
+                    />
+                    <label for="name" class="disclosed">Name</label><br />
+                    <button class="disclosed enter_chatt btn btn-primary">
+                      Enter the room
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-3">
+            <div class="col">
+              <h3>Every actions Log:</h3>
+              <ul class="loggs"></ul>
+            </div>
+          </div>
         </div>
       </div>
-    </main>
+    </div>
 
     <script type="text/python" src="main.py"></script>
     <script src="_libs/js/start.js"></script>

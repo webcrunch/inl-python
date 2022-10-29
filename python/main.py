@@ -3,9 +3,8 @@ from browser import window as w, aio
 from browser import document, ajax
 from network_brython import send_url, timestamp_to_iso, connect, send, close
 from dom_io import print as _print, input as _input
-# from pyfirmata import Arduino, util
 from datetime import datetime
-
+# from pyfirmata import Arduino, util
 # board = pyfirmata.Arduino('/ dev/ttyS4')
 # board = Arduino('COM5')
 # firmata_version = board.get_firmata_version()
@@ -21,10 +20,11 @@ color_pick_button = j('.colorGetter')
 JSON = w.JSON
 req = ajax.Ajax()
 log_template = j('.loggs')
-init_button = j('init')
+init_button = j('.init')
 chatt_button = j('.chatt')
 enter_room = j('.enter_chatt')
 blink_button = j('.E_blink')
+gradient_display = j('#gradient')
 
 
 def on_complete(req):
@@ -40,7 +40,8 @@ def color_display(e):
 
 
 def blink(e):
-    send('pushed the blink button')
+    send('pushed the blink button') if j(
+        'input[name=gradient]:checked').length < 1 else send('pushed the blink button with gradient altered:' + j(".slider").val())
     # j("body").css("background-color", j('#head').val())
 
 
@@ -68,6 +69,7 @@ def set_a_log_test(e):
 def button_click(e):
     print("Hej")
 
+
 def post_command(url, data):
     log('posting stuff')
     log(data)
@@ -93,19 +95,23 @@ def handle_connection(e):
     connect(room, name, action_cb)
 
 
-def main_connection():
-    name = 'alfa'
-    room = 'beta'
+def gradient_check(e):
+    j('.slidecontainer').css('visibility', 'visible') if j(
+        'input[name=gradient]:checked').length == 1 else j('.slidecontainer').css('visibility', 'hidden')
+
+
+def main_connect(e):
+    name = 'connect_from_body_user'
+    room = 'connect_from_body'
     connect(room, name, chatt_cb)
-    # close()
 
 
-init_button.on('click', main_connection)
+init_button.on('click', main_connect)
 color_pick_button.on('click', color_display)
 chatt_button.on('click', set_a_log_test)
 enter_room.on('click', handle_connection)
 blink_button.on('click', blink)
-# j(document).ready(main_connection)
+gradient_display.on('click', gradient_check)
 
 
 def log(string):
