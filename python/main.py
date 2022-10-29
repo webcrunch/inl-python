@@ -20,6 +20,7 @@ color_pick_button = j('.colorGetter')
 JSON = w.JSON
 req = ajax.Ajax()
 log_template = j('.loggs')
+chat_template = j('.messages')
 init_button = j('.init')
 chatt_button = j('.chatt')
 enter_room = j('.enter_chatt')
@@ -46,7 +47,9 @@ def blink(e):
 
 
 def chatt_cb(time, user, message):
-    print(time, user, message)
+    time_string = timestamp_to_iso(time)
+    chat_template.append(f'<li>{message}({time_string})</li>') if user is 'system' else chat_template.append(
+        f'<li>{message}({time_string})</li>')
     write_log(time, user, message)
 
 
@@ -92,7 +95,7 @@ def post_command(url, data):
 def handle_connection(e):
     name = j('#name').val()
     room = j('#room').val()
-    connect(room, name, action_cb)
+    connect(room, name, chatt_cb)
 
 
 def gradient_check(e):
@@ -103,7 +106,7 @@ def gradient_check(e):
 def main_connect(e):
     name = 'connect_from_body_user'
     room = 'connect_from_body'
-    connect(room, name, chatt_cb)
+    connect(room, name, action_cb)
 
 
 init_button.on('click', main_connect)
