@@ -100,8 +100,16 @@ def post_command(url, data):
     req.send({'color': data})
 
 
+def check_checkBox(e):
+    enim = 'started a sequence ' if j(
+        'input[name=programing]:checked').length > 0 else 'ended a secuence without execute it'
+    send(enim)
+
+
 def fire_em_up(e):
     print(queue)
+    j('#programing').prop("checked", False)
+    send("ended a secuence and executed it")
     # queue_list(queue,2)
     # send("executed a sequence")
 
@@ -153,7 +161,7 @@ def main_connect(e):
 
 
 j(document).ready(main_connect)
-
+j('#programing').on('click', check_checkBox)
 init_button.on('click', main_connect)
 action_from_buttons.on('click', color_display)
 chatt_button.on('click', set_a_log_test)
