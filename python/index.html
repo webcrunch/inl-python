@@ -23,7 +23,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-12 col-md-4">
+          <div class="col-sm-12 col-md-6">
             <div class="col p-2">
               <p>
                 <a
@@ -39,11 +39,23 @@
               </p>
               <div class="collapse" id="collapseExample">
                 <div class="card card-body">
-                  <button type="button p-2" class="E_blink btn btn-primary">
-                    Make it blink
+                  <p class="disclosed d-flex justify-content-center">
+                    Program a sequence of events/queues:(check the box)
+                  </p>
+                  <input
+                    type="checkbox"
+                    id="programing"
+                    name="programing"
+                    value="Program queue"
+                  />
+                  <hr />
+                  <button
+                    type="button p-2"
+                    class="pressed_button btn btn-primary"
+                    value="blink"
+                  >
+                    Blink
                   </button>
-                  <input type="checkbox" id="gradient" name="gradient" />
-                  <label for="gradient">Gradient:</label><br />
                   <div class="slidecontainer hidden">
                     <input
                       type="range"
@@ -55,16 +67,72 @@
                   </div>
                   <div>
                     <label for="head">Pick a Color:</label>
-                    <input type="color" id="head" name="head" value="#ff0000" />
                   </div>
-                  <button type="button" class="colorGetter btn btn-primary">
-                    Send Color
+                  <button
+                    type="button"
+                    class="pressed_button btn btn-primary"
+                    value="white"
+                  >
+                    turn on/white
+                  </button>
+                  <button
+                    type="button"
+                    class="pressed_button btn btn-primary"
+                    value="black"
+                  >
+                    turn off
+                  </button>
+                  <button
+                    type="button"
+                    class="pressed_button btn btn-primary"
+                    value="blue"
+                  >
+                    blue
+                  </button>
+                  <button
+                    type="button"
+                    class="pressed_button btn btn-primary"
+                    value="green"
+                  >
+                    green
+                  </button>
+                  <button
+                    type="button"
+                    class="pressed_button btn btn-primary"
+                    value="yellow"
+                  >
+                    yellow
+                  </button>
+                  <button
+                    type="button"
+                    class="pressed_button btn btn-primary"
+                    value="cyan"
+                  >
+                    cyan
+                  </button>
+                  <button
+                    type="button"
+                    class="pressed_button btn btn-primary"
+                    value="purple"
+                  >
+                    purple
                   </button>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-sm-12 col-md-5">
+          <div class="col-xs-12 col-md-6">
+            <div class="col">
+              <h3>Programming queue:</h3>
+              <ul class="p_queue"></ul>
+              <div>
+                <button type="button p-4" class="execute_queue btn btn-primary">
+                  execute the queue
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-6">
             <div class="col p-2">
               <p>
                 <a
@@ -123,7 +191,7 @@
               </div>
             </div>
           </div>
-          <div class="col-xs-12 col-sm-3">
+          <div class="col-xs-12 col-md-6">
             <div class="col">
               <h3>Every actions Log:</h3>
               <ul class="loggs"></ul>

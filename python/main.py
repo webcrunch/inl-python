@@ -3,7 +3,7 @@ from browser import window as w, document, ajax
 from network_brython import send_url, timestamp_to_iso, connect, send, close
 from dom_io import print as _print, input as _input
 from datetime import datetime
-# from arduino_handling import color_dict, blink
+# from arduino_handling import queue_list, color_dict
 from api_call import alf as call
 
 # w.localStorage.setItem('myCat', 'Tom')
@@ -16,16 +16,19 @@ if w == None:
 # setting jquery to j
 j = w.jQuery
 fetch = w.fetch
-color_pick_button = j('.colorGetter')
+action_from_buttons = j('.pressed_button')
 JSON = w.JSON
 req = ajax.Ajax()
 log_template = j('.loggs')
+queue_template = j('.p_queue')
 chat_template = j('.messages')
 init_button = j('.init')
 chatt_button = j('.chatt')
 enter_room = j('.enter_chatt')
 blink_button = j('.E_blink')
 gradient_display = j('#gradient')
+queue = []
+queue_button = j('.execute_queue')
 
 
 def on_complete(req):
@@ -36,7 +39,17 @@ def on_complete(req):
 
 
 def color_display(e):
-    send(j('#head').val() + ' send color')
+    if j('input[name=programing]:checked').length > 0:
+        queue_template.append(
+            f'<li>clicked on: <strong>{e.target.value} </strong>  and added it to the queue</li>')
+        queue.append(e.target.value)
+        # p_queue
+        # send("programming a sequence")
+    else:
+        w.console.log(e.target.value)
+        # send(e.target.value + 'send color')
+    # send(j('#head').val() + ' send color')
+      # get the value of the button
     # j("body").css("background-color", j('#head').val())
 
 
@@ -47,10 +60,10 @@ def write_log(time, user, message):
         f'<li>User {user} has done {message} ({time_string})</li>')
 
 
-def blink_handling(e):
-    send('pushed the blink button') if j(
-        'input[name=gradient]:checked').length < 1 else send('pushed the blink button with gradient altered:' + j(".slider").val())
-    # j("body").css("background-color", j('#head').val())
+# def blink_handling(e):
+#     send('pushed the blink button') if j(
+#         'input[name=gradient]:checked').length < 1 else send('pushed the blink button with gradient altered:' + j(".slider").val())
+#     # j("body").css("background-color", j('#head').val())
 
 
 def chatt_cb(time, user, message):
@@ -91,6 +104,12 @@ def post_command(url, data):
     req.send({'color': data})
 
 
+def fire_em_up(e):
+    print(queue)
+    # queue_list(queue,2)
+    # send("executed a sequence")
+
+
 def check_storage(name):
     if (w.localStorage.getItem('usernames') == None):
         users = name
@@ -115,11 +134,6 @@ def handle_connection(e):
     # connect(room, name, chatt_cb)
 
 
-def gradient_check(e):
-    j('.slidecontainer').css('visibility', 'visible') if \
-        j('input[name=gradient]:checked').length else j('.slidecontainer').css('visibility', 'hidden')
-
-
 def main_connect(e):
     name = 'muse'
     room = 'sting'
@@ -127,11 +141,10 @@ def main_connect(e):
 
 
 init_button.on('click', main_connect)
-color_pick_button.on('click', color_display)
+action_from_buttons.on('click', color_display)
 chatt_button.on('click', set_a_log_test)
 enter_room.on('click', handle_connection)
-blink_button.on('click', blink_handling)
-gradient_display.on('click', gradient_check)
+queue_button.on('click', fire_em_up)
 
 
 def log(string):
