@@ -1,21 +1,15 @@
-# from localStoragePy import localStoragePy
+import time
 from browser import window as w, document, ajax
 from network_brython import send_url, timestamp_to_iso, connect, send, close
 from dom_io import print as _print, input as _input
 from datetime import datetime
+# from arduino_handling import color_dict, blink
 from api_call import alf as call
-# localStorage = localStoragePy('your-app-namespace', 'text')
-# localStorage.setItem("user_name", "stig")
-# data = localStorage.getItem("user_name")
-# print(data)
 
+# w.localStorage.setItem('myCat', 'Tom')
+# cat = w.localStorage.getItem('myCat')
+# print(cat)
 
-# from pyfirmata import Arduino, util
-# board = pyfirmata.Arduino('/ dev/ttyS4')
-# board = Arduino('COM5')
-# firmata_version = board.get_firmata_version()
-# print("Connected to Firmata " +
-#       str(firmata_version[0]) + "." + str(firmata_version[1]))
 
 if w == None:
     quit('Can only be run in a web browser!')
@@ -74,7 +68,7 @@ def action_cb(time, user, message):
     message = message.replace('.', '')
     message = message.replace('\'', '')
     # print('time:', time, 'user:', user, 'message:', message)
-    write_log(time, message)
+    # write_log(time=time, message=message, user=user)
 
 
 def set_a_log_test(e):
@@ -97,14 +91,28 @@ def post_command(url, data):
     req.send({'color': data})
 
 
+def check_storage(name):
+    if (w.localStorage.getItem('usernames') == None):
+        users = name
+        w.localStorage.setItem('usernames', users)
+        print(w.localStorage)
+    else:
+        users = w.localStorage.getItem("usernames")
+        # exist = [x for x in users if x == name]
+        # print(exist, users, name)
+        # if x == value]
+    return
+
 # def on_message(timestamp, user, message):
 #     print(timestamp, user, message)
 #     write_log(timestamp, message)
 
+
 def handle_connection(e):
+    check_name = check_storage(j('#name').val())
     name = j('#name').val()
     room = j('#room').val()
-    connect(room, name, chatt_cb)
+    # connect(room, name, chatt_cb)
 
 
 def gradient_check(e):
