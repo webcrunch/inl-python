@@ -23,13 +23,27 @@ board = Arduino('COM5')
 
 def blink():
     global board
-    for i in range(6):
-        print(i)
-    # for r in range(6):
-    #     board.digital[13].write(1)
-    #     time.sleep(1)
-    #     board.digital[13].write(0)
-    #     time.sleep(1)
+    turn(False)
+    time.sleep(1)
+    turn(True)
+    time.sleep(1)
+    turn(False)
+    time.sleep(1)
+    turn(True)
+    time.sleep(1)
+    turn(False)
+#     for i in range(6):
+#         print(i)
+#         board.digital[13].write(1)
+#         time.sleep(1)
+#         board.digital[13].write(0)
+#         time.sleep(1)
+
+# for r in range(6):
+#     board.digital[13].write(1)
+#     time.sleep(1)
+#     board.digital[13].write(0)
+#     time.sleep(1)
 
 
 def display_color(color):
@@ -50,4 +64,20 @@ def display_color(color):
     board.digital[6].write(r)  # red
 
 
-display_color("purple")
+def turn(state):
+    display_color("black") if state is not True else display_color("white")
+
+
+def queue_list(list, waiting):
+    for r in list:
+
+        if (r == "blink"):
+            blink()
+        else:
+            display_color(r)
+
+        time.sleep(waiting)
+
+
+queue_list(["yellow", "green", "blue", "red",
+           "cyan", "blink", "blink", "yellow", "green"], 3)
