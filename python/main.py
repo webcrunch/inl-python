@@ -1,14 +1,12 @@
 import time
+import random
+
 from browser import window as w, document, ajax
 from network_brython import send_url, timestamp_to_iso, connect, send, close
 from dom_io import print as _print, input as _input
 from datetime import datetime
 # from arduino_handling import queue_list, color_dict
 from api_call import alf as call
-
-# w.localStorage.setItem('myCat', 'Tom')
-# cat = w.localStorage.getItem('myCat')
-# print(cat)
 
 
 if w == None:
@@ -25,8 +23,6 @@ chat_template = j('.messages')
 init_button = j('.init')
 chatt_button = j('.chatt')
 enter_room = j('.enter_chatt')
-blink_button = j('.E_blink')
-gradient_display = j('#gradient')
 queue = []
 queue_button = j('.execute_queue')
 
@@ -80,8 +76,8 @@ def action_cb(time, user, message):
     user = user.replace('\'', '')
     message = message.replace('.', '')
     message = message.replace('\'', '')
-    # print('time:', time, 'user:', user, 'message:', message)
-    # write_log(time=time, message=message, user=user)
+    print('time:', time, 'user:', user, 'message:', message)
+    write_log(time=time, message=message, user=user)
 
 
 def set_a_log_test(e):
@@ -111,16 +107,20 @@ def fire_em_up(e):
 
 
 def check_storage(name):
-    if (w.localStorage.getItem('usernames') == None):
+
+    if (w.localStorage.getItem('usernames') ==
+            None or w.localStorage.getItem('usernames') == ''):
         users = name
         w.localStorage.setItem('usernames', users)
-        print(w.localStorage)
+        return True
     else:
         users = w.localStorage.getItem("usernames")
-        # exist = [x for x in users if x == name]
-        # print(exist, users, name)
-        # if x == value]
-    return
+        if name in users:
+            return False
+        else:
+            w.localStorage.setItem('usernames', f'{users},{name}')
+            return True
+
 
 # def on_message(timestamp, user, message):
 #     print(timestamp, user, message)
@@ -128,6 +128,9 @@ def check_storage(name):
 
 
 def handle_connection(e):
+    # w.localStorage.setItem('myCat', 'Tom')
+    # cat = w.localStorage.getItem('myCat')
+    # print(cat)
     check_name = check_storage(j('#name').val())
     name = j('#name').val()
     room = j('#room').val()
@@ -135,10 +138,21 @@ def handle_connection(e):
 
 
 def main_connect(e):
-    name = 'muse'
-    room = 'sting'
-    connect(room, name, action_cb)
+    name = 'auto_connect_user'
+    room = 'auto_connect'
+    check_name = check_storage(name)
+    print(check_name)
+    if (check_name is not True):
+        name = f'{name}_{random.randint(0, 9000)}'
+        check_name = check_storage(name)
+        print(check_name)
+        connect(room, name, action_cb)
+    else:
+        connect(room, name, action_cb)
+    w.localStorage.setItem('date', datetime.today().strftime('%Y-%m-%d'))
 
+
+j(document).ready(main_connect)
 
 init_button.on('click', main_connect)
 action_from_buttons.on('click', color_display)
