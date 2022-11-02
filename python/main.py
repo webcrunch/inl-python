@@ -2,7 +2,7 @@ import time
 import random
 # from arduino_handling import queue_list, color_dict, blink
 from browser import window as w, document, ajax, aio
-from network_brython import send_url, timestamp_to_iso, connect, send, connect_chatt, send_chatt, close
+from network_brython import send_url, timestamp_to_iso, connect, send, close
 from dom_io import print as _print, input as _input
 from datetime import datetime
 # from arduino_handling import queue_list, color_dict
@@ -151,12 +151,12 @@ def handle_connection(e):
     if (check_name is not True):
         name = f'{name}_{random.randint(0, 9000)}'
         check_name = check_storage(name)
-        connect_chatt(room, name, action_cb)
-    connect_chatt(room, name, chatt_cb)
+        connect(room, name, action_cb)
+    connect(room, name, chatt_cb)
 
 
 def send_chatt_message(e):
-    send_chatt(j('#room_message_sender').val())
+    send(j('#room_message_sender').val())
 
 
 async def send_command(url):
