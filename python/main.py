@@ -1,13 +1,12 @@
 import time
 import random
-
-from browser import window as w, document, ajax
+# from arduino_handling import queue_list, color_dict, blink
+from browser import window as w, document, ajax, aio
 from network_brython import send_url, timestamp_to_iso, connect, send, close
 from dom_io import print as _print, input as _input
 from datetime import datetime
 # from arduino_handling import queue_list, color_dict
-from api_call import alf as call
-
+# from api_call import alf as call
 
 if w == None:
     quit('Can only be run in a web browser!')
@@ -19,12 +18,13 @@ JSON = w.JSON
 req = ajax.Ajax()
 log_template = j('.loggs')
 queue_template = j('.p_queue')
-chat_template = j('.messages')
-init_button = j('.init')
+chat_template = j('.chat_logs')
+# init_button = j('.init')
 chatt_button = j('.chatt')
 enter_room = j('.enter_chatt')
 queue = []
 queue_button = j('.execute_queue')
+send_chatt_message_button = j('.chatt_message')
 
 
 def on_complete(req):
@@ -42,8 +42,8 @@ def color_display(e):
         # p_queue
         # send("programming a sequence")
     else:
-        w.console.log(e.target.value)
-        # send(e.target.value + 'send color')
+        send(f'send color:{e.target.value}')
+        aio.run(send_command(f'{w.location.href}/color/{e.target.value}'))
     # send(j('#head').val() + ' send color')
       # get the value of the button
     # j("body").css("background-color", j('#head').val())
@@ -51,9 +51,9 @@ def color_display(e):
 
 def write_log(time, user, message):
     time_string = timestamp_to_iso(time)
-    print('time:', time, 'user:', user, 'message:', message)
+    # print('time:', time, 'user:', user, 'message:', message)
     log_template.append(f'<li>{message}({time_string})</li>') if user is 'system' else log_template.append(
-        f'<li>User {user} has done {message} ({time_string})</li>')
+        f'<li>User {user} has {message} ({time_string})</li>')
 
 
 # def blink_handling(e):
@@ -66,6 +66,8 @@ def chatt_cb(time, user, message):
     user = user.replace('\'', '')
     message = message.replace('.', ' ')
     message = message.replace('\'', '')
+    if (j('.disclosed_chatt').css("display") is not 'flex'):
+        j('.disclosed_chatt').css("display", "flex")
     time_string = timestamp_to_iso(time)
     chat_template.append(f'<li>{message}({time_string})</li>') if user is 'system' else chat_template.append(
         f'<li>{message}({time_string})</li>')
@@ -76,7 +78,6 @@ def action_cb(time, user, message):
     user = user.replace('\'', '')
     message = message.replace('.', '')
     message = message.replace('\'', '')
-    print('time:', time, 'user:', user, 'message:', message)
     write_log(time=time, message=message, user=user)
 
 
@@ -85,19 +86,19 @@ def set_a_log_test(e):
     #
 
 
-def post_command(url, data):
-    log('posting stuff')
-    log(data)
-    # await (w.fetch(f'{url}', {
-    #     'method': 'POST',
-    #     'body': JSON.stringify({'message': data})
-    # }))
-    req.bind('complete', on_complete)
-    # send a POST request to the url
-    req.open('POST', url, True)
-    req.set_header('content-type', 'application/x-www-form-urlencoded')
-    # send data as a dictionary
-    req.send({'color': data})
+# def post_command(url, data):
+#     log('posting stuff')
+#     log(data)
+#     # await (w.fetch(f'{url}', {
+#     #     'method': 'POST',
+#     #     'body': JSON.stringify({'message': data})
+#     # }))
+#     req.bind('complete', on_complete)
+#     # send a POST request to the url
+#     req.open('POST', url, True)
+#     req.set_header('content-type', 'application/x-www-form-urlencoded')
+#     # send data as a dictionary
+#     req.send({'color': data})
 
 
 def check_checkBox(e):
@@ -107,11 +108,23 @@ def check_checkBox(e):
 
 
 def fire_em_up(e):
-    print(queue)
     j('#programing').prop("checked", False)
-    send("ended a secuence and executed it")
-    # queue_list(queue,2)
-    # send("executed a sequence")
+    # send("ended a secuence and executed it")
+
+    for r in queue:
+        print(r)
+        if (r == "blink"):
+            #     # blink()
+            pass
+        else:
+            #     pass
+            aio.run(send_command(f'{w.location.href}/color/{r}'))
+            time.sleep(2)
+        # time.sleep(1)
+        # time.sleep(2)
+
+        # queue_list(queue,2)
+        # send("executed a sequence")
 
 
 def check_storage(name):
@@ -136,24 +149,33 @@ def check_storage(name):
 
 
 def handle_connection(e):
-    # w.localStorage.setItem('myCat', 'Tom')
-    # cat = w.localStorage.getItem('myCat')
-    # print(cat)
-    check_name = check_storage(j('#name').val())
     name = j('#name').val()
     room = j('#room').val()
-    # connect(room, name, chatt_cb)
+    check_name = check_storage(name)
+    if (check_name is not True):
+        name = f'{name}_{random.randint(0, 9000)}'
+        check_name = check_storage(name)
+        connect(room, name, action_cb)
+    connect(room, name, chatt_cb)
+
+
+def send_chatt_message(e):
+    send(j('#room_message_sender').val())
+
+
+async def send_command(url):
+    print(url)
+    response = await (await fetch(url)).json()
+    log(response)
 
 
 def main_connect(e):
     name = 'auto_connect_user'
     room = 'auto_connect'
     check_name = check_storage(name)
-    print(check_name)
     if (check_name is not True):
         name = f'{name}_{random.randint(0, 9000)}'
         check_name = check_storage(name)
-        print(check_name)
         connect(room, name, action_cb)
     else:
         connect(room, name, action_cb)
@@ -162,22 +184,16 @@ def main_connect(e):
 
 j(document).ready(main_connect)
 j('#programing').on('click', check_checkBox)
-init_button.on('click', main_connect)
+# init_button.on('click', main_connect)
 action_from_buttons.on('click', color_display)
 chatt_button.on('click', set_a_log_test)
 enter_room.on('click', handle_connection)
 queue_button.on('click', fire_em_up)
+send_chatt_message_button.on('click', send_chatt_message)
 
 
 def log(string):
-    print("herer")
     w.console.log(string)
-
-
-async def send_command(url):
-    print(url)
-    response = await (await fetch(url)).json()
-    log(response)
 
 
 async def send_get_Data(url):
