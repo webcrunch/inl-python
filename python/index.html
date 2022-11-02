@@ -17,11 +17,6 @@
         </h1>
       </div>
       <div class="row">
-        <div class="">
-          <div class="col p-2">
-            <button type="button" class="init btn btn-primary">Connect!</button>
-          </div>
-        </div>
         <div class="row">
           <div class="col-sm-12 col-md-6">
             <div class="col p-2">
@@ -143,7 +138,7 @@
                   aria-expanded="false"
                   aria-controls="ChattColpasse"
                 >
-                  Color and actions handling
+                  Mini Chatting
                 </a>
               </p>
               <div class="collapse" id="ChattColpasse">
@@ -159,7 +154,7 @@
                       id="room"
                       name="head"
                       value=""
-                    />
+                    /><br />
                     <label for="name" class="disclosed">Name</label><br />
                     <input
                       type="text"
@@ -172,20 +167,25 @@
                       Enter the room
                     </button>
                   </div>
-                  <label for="room" class="disclosed">Chatt:</label><br />
+                  <label for="room" class="disclosed_chatt"
+                    >write a message for the little chatt:</label
+                  ><br />
                   <input
                     type="text"
-                    class="disclosed"
-                    id="room"
+                    class="disclosed_chatt"
+                    id="room_message_sender"
                     name="head"
-                    value="Write a message"
+                    value="Write a chatt message here!"
                   />
-                  <button type="button" class="chatt_message btn btn-primary">
+                  <button
+                    type="button"
+                    class="disclosed_chatt chatt_message btn btn-primary"
+                  >
                     Send message
                   </button>
                   <div class="col">
-                    <h3>Every actions Log:</h3>
-                    <ul class="loggs"></ul>
+                    <h3>Minor Chatt messages:</h3>
+                    <ul class="chat_logs"></ul>
                   </div>
                 </div>
               </div>
