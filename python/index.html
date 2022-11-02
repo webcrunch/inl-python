@@ -11,191 +11,201 @@
 
   <body>
     <div class="container-fluid">
-      <div class="d-flex justify-content-center">
-        <h1>
-          Welcome to multipurpose handling with colors and other fun things!
-        </h1>
+      <div class="justify-content-center">
+        <div>
+          <h1 class="col-sm-12 col-md-6">
+            Welcome to multipurpose handling with colors and other fun things!
+          </h1>
+        </div>
+        <div>
+          <p class="user d-flex justify-content-right"></p>
+        </div>
       </div>
       <div class="row">
-        <div class="row">
-          <div class="col-sm-12 col-md-6">
-            <div class="col p-2">
-              <p>
-                <a
-                  class="btn btn-primary"
-                  data-bs-toggle="collapse"
-                  href="#collapseExample"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="collapseExample"
+        <div class="col-sm-12 col-md-6">
+          <div class="col p-2">
+            <p>
+              <a
+                class="btn btn-primary"
+                data-bs-toggle="collapse"
+                href="#collapseExample"
+                role="button"
+                aria-expanded="false"
+                aria-controls="collapseExample"
+              >
+                Color and actions handling
+              </a>
+            </p>
+            <div class="collapse" id="collapseExample">
+              <div class="card card-body">
+                <p class="disclosed d-flex justify-content-center">
+                  Program a sequence of events/queues:(check the box)
+                </p>
+                <input
+                  type="checkbox"
+                  id="programing"
+                  name="programing"
+                  value="Program queue"
+                />
+                <hr />
+                <button
+                  type="button p-2"
+                  class="pressed_button btn btn-primary"
+                  value="blink"
                 >
-                  Color and actions handling
-                </a>
-              </p>
-              <div class="collapse" id="collapseExample">
-                <div class="card card-body">
-                  <p class="disclosed d-flex justify-content-center">
-                    Program a sequence of events/queues:(check the box)
-                  </p>
-                  <input
-                    type="checkbox"
-                    id="programing"
-                    name="programing"
-                    value="Program queue"
-                  />
-                  <hr />
-                  <button
-                    type="button p-2"
-                    class="pressed_button btn btn-primary"
-                    value="blink"
-                  >
-                    Blink
-                  </button>
-                  <div class="slidecontainer hidden">
-                    <input
-                      type="range"
-                      min="1"
-                      value="300"
-                      max="10000"
-                      class="slider"
-                    />
-                  </div>
-                  <div>
-                    <label for="head">Pick a Color:</label>
-                  </div>
-                  <button
-                    type="button"
-                    class="pressed_button btn btn-primary"
-                    value="white"
-                  >
-                    turn on/white
-                  </button>
-                  <button
-                    type="button"
-                    class="pressed_button btn btn-primary"
-                    value="black"
-                  >
-                    turn off
-                  </button>
-                  <button
-                    type="button"
-                    class="pressed_button btn btn-primary"
-                    value="blue"
-                  >
-                    blue
-                  </button>
-                  <button
-                    type="button"
-                    class="pressed_button btn btn-primary"
-                    value="green"
-                  >
-                    green
-                  </button>
-                  <button
-                    type="button"
-                    class="pressed_button btn btn-primary"
-                    value="yellow"
-                  >
-                    yellow
-                  </button>
-                  <button
-                    type="button"
-                    class="pressed_button btn btn-primary"
-                    value="cyan"
-                  >
-                    cyan
-                  </button>
-                  <button
-                    type="button"
-                    class="pressed_button btn btn-primary"
-                    value="purple"
-                  >
-                    purple
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-xs-12 col-md-6">
-            <div class="col">
-              <h3>Programming queue:</h3>
-              <ul class="p_queue"></ul>
-              <div>
-                <button type="button p-4" class="execute_queue btn btn-primary">
-                  execute the queue
+                  Blink
                 </button>
+                <div class="slidecontainer hidden">
+                  <input
+                    type="range"
+                    min="1"
+                    value="300"
+                    max="10000"
+                    class="slider"
+                  />
+                </div>
+                <div>
+                  <label for="head">Pick a Color:</label>
+                </div>
+                <button
+                  type="button"
+                  class="pressed_button btn btn-primary"
+                  value="white"
+                >
+                  turn on/white
+                </button>
+                <button
+                  type="button"
+                  class="pressed_button btn btn-primary"
+                  value="black"
+                >
+                  turn off
+                </button>
+                <button
+                  type="button"
+                  class="pressed_button btn btn-primary"
+                  value="blue"
+                >
+                  blue
+                </button>
+                <button
+                  type="button"
+                  class="pressed_button btn btn-primary"
+                  value="green"
+                >
+                  green
+                </button>
+                <button
+                  type="button"
+                  class="pressed_button btn btn-primary"
+                  value="yellow"
+                >
+                  yellow
+                </button>
+                <button
+                  type="button"
+                  class="pressed_button btn btn-primary"
+                  value="cyan"
+                >
+                  cyan
+                </button>
+                <button
+                  type="button"
+                  class="pressed_button btn btn-primary"
+                  value="purple"
+                >
+                  purple
+                </button>
+                <!-- <button
+                    type="button"
+                    class="pressed_button btn btn-primary"
+                    value="rainbow"
+                  >
+                    cykle through the rainbow colors
+                  </button> -->
               </div>
             </div>
           </div>
-          <div class="col-xs-12 col-md-6">
-            <div class="col p-2">
-              <p>
-                <a
-                  class="btn btn-primary"
-                  data-bs-toggle="collapse"
-                  href="#ChattColpasse"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="ChattColpasse"
-                >
-                  Mini Chatting
-                </a>
-              </p>
-              <div class="collapse" id="ChattColpasse">
-                <div class="card card-body">
-                  <button type="button" class="chatt btn btn-primary">
-                    Chatt with others
-                  </button>
-                  <div>
-                    <label for="room" class="disclosed">Room</label><br />
-                    <input
-                      type="text"
-                      class="disclosed"
-                      id="room"
-                      name="head"
-                      value=""
-                    /><br />
-                    <label for="name" class="disclosed">Name</label><br />
-                    <input
-                      type="text"
-                      class="disclosed"
-                      id="name"
-                      name="head"
-                      value=""
-                    />
-                    <button class="disclosed enter_chatt btn btn-primary">
-                      Enter the room
-                    </button>
-                  </div>
-                  <label for="room" class="disclosed_chatt"
-                    >write a message for the little chatt:</label
-                  ><br />
+        </div>
+        <div class="col-xs-12 col-md-6">
+          <div class="col">
+            <h3>Programming queue:</h3>
+            <ul class="p_queue"></ul>
+            <div>
+              <button type="button p-4" class="execute_queue btn btn-primary">
+                execute the queue
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+          <div class="col p-2">
+            <p>
+              <a
+                class="btn btn-primary"
+                data-bs-toggle="collapse"
+                href="#ChattColpasse"
+                role="button"
+                aria-expanded="false"
+                aria-controls="ChattColpasse"
+              >
+                Mini Chatting
+              </a>
+            </p>
+            <div class="collapse" id="ChattColpasse">
+              <div class="card card-body">
+                <button type="button" class="chatt btn btn-primary">
+                  Chatt with others
+                </button>
+                <div>
+                  <label for="room" class="disclosed">Room</label><br />
                   <input
                     type="text"
-                    class="disclosed_chatt"
-                    id="room_message_sender"
+                    class="disclosed"
+                    id="room"
                     name="head"
-                    value="Write a chatt message here!"
+                    value=""
+                  /><br />
+                  <label for="name" class="disclosed">Name</label><br />
+                  <input
+                    type="text"
+                    class="disclosed"
+                    id="name"
+                    name="head"
+                    value=""
                   />
-                  <button
-                    type="button"
-                    class="disclosed_chatt chatt_message btn btn-primary"
-                  >
-                    Send message
+                  <button class="disclosed enter_chatt btn btn-primary">
+                    Enter the room
                   </button>
-                  <div class="col">
-                    <h3>Minor Chatt messages:</h3>
-                    <ul class="chat_logs"></ul>
-                  </div>
+                </div>
+                <label for="room" class="disclosed_chatt"
+                  >write a message for the little chatt:</label
+                ><br />
+                <input
+                  type="text"
+                  class="disclosed_chatt"
+                  id="room_message_sender"
+                  name="head"
+                  value="Write a chatt message here!"
+                />
+                <button
+                  type="button"
+                  class="disclosed_chatt chatt_message btn btn-primary"
+                >
+                  Send message
+                </button>
+                <div class="col">
+                  <h3>Minor Chatt messages:</h3>
+                  <ul class="chat_logs"></ul>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-xs-12 col-md-6">
-            <div class="col">
-              <h3>Every actions Log:</h3>
-              <ul class="loggs"></ul>
-            </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+          <div class="col">
+            <h3>Every actions Log:</h3>
+            <ul class="loggs"></ul>
           </div>
         </div>
       </div>
