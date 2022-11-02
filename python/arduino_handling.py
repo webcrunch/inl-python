@@ -21,29 +21,32 @@ color_dict = {
 board = Arduino('COM5')
 
 
-def blink():
+def blink(handling=6):
     global board
-    turn(False)
-    time.sleep(1)
-    turn(True)
-    time.sleep(1)
-    turn(False)
-    time.sleep(1)
-    turn(True)
-    time.sleep(1)
-    turn(False)
+    # turn(False)
+    # time.sleep(1)
+    # turn(True)
+    # time.sleep(1)
+
+    # turn(False)
+    # time.sleep(1)
+    # turn(True)
+    # time.sleep(1)
+    # turn(False)
+
+    for i in range(handling):
+        display_color("black")
+        time.sleep(1)
+        display_color("white")
+        time.sleep(1)
+        display_color("black")
+
 #     for i in range(6):
 #         print(i)
 #         board.digital[13].write(1)
 #         time.sleep(1)
 #         board.digital[13].write(0)
 #         time.sleep(1)
-
-# for r in range(6):
-#     board.digital[13].write(1)
-#     time.sleep(1)
-#     board.digital[13].write(0)
-#     time.sleep(1)
 
 
 def display_color(color):
@@ -79,5 +82,11 @@ def queue_list(list, waiting):
         time.sleep(waiting)
 
 
-queue_list(["yellow", "green", "blue", "red",
-           "cyan", "blink", "blink", "yellow", "green"], 3)
+# queue_list(["yellow", "green", "blue", "red",
+#            "cyan", "blink", "blink", "yellow", "green" , "yellow", "green", "blue", ], 1)
+
+
+# queue_list(["blue", "blink", "blue", "blink", "blue", "blink", "blue",
+#            "blink", "blue", "blink", "blue", "blink", "blue", "blink"], 2)
+
+blink(1)
