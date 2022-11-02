@@ -2,7 +2,7 @@ import time
 import random
 # from arduino_handling import queue_list, color_dict, blink
 from browser import window as w, document, ajax, aio
-from network_brython import send_url, timestamp_to_iso, connect, send, close
+from network_brython import send_url, timestamp_to_iso, connect, send, connect_chatt, send_chatt, close
 from dom_io import print as _print, input as _input
 from datetime import datetime
 # from arduino_handling import queue_list, color_dict
@@ -42,8 +42,18 @@ def color_display(e):
         # p_queue
         # send("programming a sequence")
     else:
-        send(f'send color:{e.target.value}')
-        aio.run(send_command(f'{w.location.href}/color/{e.target.value}'))
+        print(e.target.value != 'rainbow')
+        if e.target.value != 'blink' and e.target.value != 'rainbow':
+            send(f'send color:{e.target.value}')
+            aio.run(send_command(f'{w.location.href}color/{e.target.value}'))
+        elif e.target.value == 'blink':
+            send(f'make it blink')
+            aio.run(send_command(f'{w.location.href}{e.target.value}'))
+        # elif e.target.value == 'rainbow':
+        #     print("here")
+        #     send(f'send color:{e.target.value}')
+        #     aio.run(send_command(f'{w.location.href}{e.target.value}'))
+
     # send(j('#head').val() + ' send color')
       # get the value of the button
     # j("body").css("background-color", j('#head').val())
@@ -83,22 +93,6 @@ def action_cb(time, user, message):
 
 def set_a_log_test(e):
     j('.disclosed').toggle(200)  # .css("display", "flex")
-    #
-
-
-# def post_command(url, data):
-#     log('posting stuff')
-#     log(data)
-#     # await (w.fetch(f'{url}', {
-#     #     'method': 'POST',
-#     #     'body': JSON.stringify({'message': data})
-#     # }))
-#     req.bind('complete', on_complete)
-#     # send a POST request to the url
-#     req.open('POST', url, True)
-#     req.set_header('content-type', 'application/x-www-form-urlencoded')
-#     # send data as a dictionary
-#     req.send({'color': data})
 
 
 def check_checkBox(e):
@@ -108,23 +102,25 @@ def check_checkBox(e):
 
 
 def fire_em_up(e):
+    # uncheck the checkbox
     j('#programing').prop("checked", False)
     # send("ended a secuence and executed it")
+    aio.run(list_execution())
+    queue_template.append()
+    # queue.clear()
+    send("executed a sequence")
 
+
+async def list_execution():
     for r in queue:
-        print(r)
-        if (r == "blink"):
-            #     # blink()
+        if (r == 'blink'):
+            aio.run(send_command(f'{w.location.href}{r}'))
             pass
+        elif (r == 'rainbow'):
+            aio.run(send_command(f'{w.location.href}{r}'))
         else:
-            #     pass
-            aio.run(send_command(f'{w.location.href}/color/{r}'))
-            time.sleep(2)
-        # time.sleep(1)
-        # time.sleep(2)
-
-        # queue_list(queue,2)
-        # send("executed a sequence")
+            aio.run(send_command(f'{w.location.href}color/{r}'))
+        await aio.sleep(2)
 
 
 def check_storage(name):
@@ -155,12 +151,12 @@ def handle_connection(e):
     if (check_name is not True):
         name = f'{name}_{random.randint(0, 9000)}'
         check_name = check_storage(name)
-        connect(room, name, action_cb)
-    connect(room, name, chatt_cb)
+        connect_chatt(room, name, action_cb)
+    connect_chatt(room, name, chatt_cb)
 
 
 def send_chatt_message(e):
-    send(j('#room_message_sender').val())
+    send_chatt(j('#room_message_sender').val())
 
 
 async def send_command(url):
@@ -179,6 +175,8 @@ def main_connect(e):
         connect(room, name, action_cb)
     else:
         connect(room, name, action_cb)
+
+    j('.user').append(f'user:{name}')
     w.localStorage.setItem('date', datetime.today().strftime('%Y-%m-%d'))
 
 
