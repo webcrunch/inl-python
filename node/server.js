@@ -51,13 +51,12 @@ const server = (rgb) => {
   });
 
   app.get("/off", (req, res) => {
-    rgb.color("#FFFFFF");
+    rgb.color(color_dict["black"]);
     res.status(200).json(true);
   });
 
   app.get("/on", (req, res) => {
-    // rgb.color("#000000");
-    rgb.off();
+    rgb.color(color_dict["white"]);
     res.status(200).json(true);
   });
 
@@ -120,6 +119,7 @@ const server = (rgb) => {
 
   app.get("/blink/:sequence?/", async (req, res) => {
     rgb.blink(req.params.sequence != undefined ? req.params.sequence : 1000);
+    res.status(200).json({ status: true });
   });
 
   //   app.get("/power/:status", async (req, res) => {
