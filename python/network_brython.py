@@ -45,6 +45,7 @@ JSON = window.JSON
 channel_name = None
 user_name = None
 token = None
+tokenD = {}
 message_handler = None
 evt_src = None
 last_message_time = 0
@@ -52,7 +53,9 @@ serverURL = 'https://sse.nodehill.com'
 
 
 def on_token(e):
+    global user_name
     global token
+    tokenD[user_name] = JSON.parse(e.data)
     token = JSON.parse(e.data)
 
 # convert timestamp to iso date time format
@@ -90,8 +93,9 @@ def connect(channel, user, handler):
     evt_src.addEventListener('token', on_token)
 
 
-def send(message):
-    fetch(f'{serverURL}/api/send/{token}', {
+def send(message, user):
+    print(tokenD[user], user, token, "hello everybody")
+    fetch(f'{serverURL}/api/send/{tokenD[user]}', {
         'headers': {'Content-Type': 'application/json'},
         'method': 'POST',
         'body': JSON.stringify({'message': message})

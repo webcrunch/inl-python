@@ -157,7 +157,7 @@ def handle_connection(e):
 
 
 def send_chatt_message(e):
-    send(j('#room_message_sender').val())
+    send(j('#room_message_sender').val(), users['chatt'])
     j('#room_message_sender').val("")
 
 
