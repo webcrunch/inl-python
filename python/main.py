@@ -18,6 +18,7 @@ JSON = w.JSON
 req = ajax.Ajax()
 log_template = j('.loggs')
 queue_template = j('.p_queue')
+users = {'auto': '', 'chatt': ''}
 chat_template = j('.chat_logs')
 # init_button = j('.init')
 chatt_button = j('.chatt')
@@ -42,9 +43,9 @@ def color_display(e):
         # p_queue
         # send("programming a sequence")
     else:
-        print(e.target.value != 'rainbow')
+
         if e.target.value != 'blink' and e.target.value != 'rainbow':
-            send(f'send color:{e.target.value}')
+            send(f'send color:{e.target.value}', users['auto'])
             aio.run(send_command(f'{w.location.href}color/{e.target.value}'))
         elif e.target.value == 'blink':
             send(f'make it blink')
@@ -96,9 +97,8 @@ def set_a_log_test(e):
 
 
 def check_checkBox(e):
-    enim = 'started a sequence ' if j(
-        'input[name=programing]:checked').length > 0 else 'ended a secuence without execute it'
-    send(enim)
+    send('started a sequence ' if j(
+        'input[name=programing]:checked').length > 0 else 'ended a secuence without execute it')
 
 
 def fire_em_up(e):
@@ -151,12 +151,14 @@ def handle_connection(e):
     if (check_name is not True):
         name = f'{name}_{random.randint(0, 9000)}'
         check_name = check_storage(name)
-        connect(room, name, action_cb)
+    #     connect(room, name, action_cb)
     connect(room, name, chatt_cb)
+    users['chatt'] = name
 
 
 def send_chatt_message(e):
     send(j('#room_message_sender').val())
+    j('#room_message_sender').val("")
 
 
 async def send_command(url):
@@ -176,6 +178,7 @@ def main_connect(e):
     else:
         connect(room, name, action_cb)
 
+    users['auto'] = name
     j('.user').append(f'user:{name}')
     w.localStorage.setItem('date', datetime.today().strftime('%Y-%m-%d'))
 
