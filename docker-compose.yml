@@ -1,0 +1,25 @@
+version: "3.7"
+
+# volumes:
+#   database:
+#     driver: local
+#
+
+services:
+  node:
+    build:
+       context: .
+       dockerfile: node/Dockerfile
+    networks:
+      - app-tier
+    restart: unless-stopped
+    working_dir: /node
+    command: sh -c "/wait && npm i && npm run start"
+    ports:
+      - 5000:5000
+    volumes:
+     - ./node/:/node
+
+networks:
+    app-tier:
+        driver: bridge
