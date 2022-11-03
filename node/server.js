@@ -8,9 +8,9 @@ const color_dict = {
   green: "#ff00ff",
   red: "#ffff00",
   blue: "#00ffff",
-  purple: { R: 0, G: 1, B: 0 },
+  purple: "#00ff00",
   yellow: "#ff0000",
-  cyan: { R: 0, G: 0, B: 1 },
+  // cyan: { R: 0, G: 0, B: 1 },
 };
 const colors = [
   "red",
@@ -18,7 +18,7 @@ const colors = [
   "blue",
   "purple",
   "yellow",
-  "cyan",
+  // "cyan",
   "white",
   "black",
 ];
