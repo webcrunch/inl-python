@@ -98,7 +98,7 @@ def set_a_log_test(e):
 
 def check_checkBox(e):
     send('started a sequence ' if j(
-        'input[name=programing]:checked').length > 0 else 'ended a secuence without execute it')
+        'input[name=programing]:checked').length > 0 else 'ended a secuence without execute it', users['auto'])
 
 
 def fire_em_up(e):
