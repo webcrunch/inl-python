@@ -82,7 +82,7 @@ def chatt_cb(time, user, message):
         j('.disclosed_chatt').css("display", "flex")
     time_string = timestamp_to_iso(time)
     chat_template.append(f'<li>{message}({time_string})</li>') if user is 'system' else chat_template.append(
-        f'<li>{message}({time_string})</li>')
+        f'<li>{user} has written: {message} ({time_string})</li>')
     write_log(time, user, message)
 
 
@@ -149,6 +149,7 @@ def handle_connection(e):
         connect(room, name, action_cb)
     connect(room, name, chatt_cb)
     users['chatt'] = name
+    j('.chatt_user').append(f'user:{name}')
 
 
 def send_chatt_message(e):
