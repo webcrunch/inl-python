@@ -51,76 +51,35 @@ const server = (rgb) => {
   });
 
   app.get("/off", (req, res) => {
-    rgb.color(color_dict["black"]);
-    res.status(200).json(true);
+    rgb.toggle();
+    res.status(200).json({ data: "off" });
   });
 
   app.get("/on", (req, res) => {
-    rgb.color(color_dict["white"]);
+    // rgb.color(color_dict["white"]);
+    rgb.toggle();
     res.status(200).json(true);
   });
 
-  app.post("/morseCode", async (req, res) => {
-    let sentence = [];
-    for (let i = 0; i < req.body.sequence.length; i++) {
-      console.log(req.body.sequence[i]);
-    }
-    // let words = rgb.blink();
-    res.json(true);
-  });
+  // app.post("/morseCode", async (req, res) => {
+  //   let sentence = [];
+  //   for (let i = 0; i < req.body.sequence.length; i++) {
+  //     console.log(req.body.sequence[i]);
+  //   }
+  //   // let words = rgb.blink();
+  //   res.json(true);
+  // });
 
-  app.get("/rainbow", (req, res) => {
-    let rainbow;
-    let lastColor = "ff0000";
-    let red = 255,
-      green = 0,
-      blue = 0,
-      s = 0;
-    clearInterval(rainbow);
-    rainbow = setInterval(function () {
-      switch (s) {
-        case 0:
-          red -= 1;
-          green += 1;
-          if (red == 0) {
-            s = 1;
-          }
-          break;
-        case 1:
-          green -= 1;
-          blue += 1;
-          if (green == 0) {
-            s = 2;
-          }
-          break;
-        case 2:
-          blue -= 1;
-          red += 1;
-          if (blue == 0) {
-            s = 0;
-          }
-          break;
-      }
-      let a = red + "," + green + "," + blue;
-      a = a.split(",");
-      let b = a.map(function (x) {
-        x = parseInt(x).toString(16);
-        return x.length == 1 ? "0" + x : x;
-      });
-
-      b = "" + b.join("");
-
-      rgb.color(b);
-      lastColor = b;
-    }, 10);
-
-    res.json({ status: true });
-  });
-
-  app.get("/blink/:sequence?/", async (req, res) => {
-    rgb.blink(req.params.sequence != undefined ? req.params.sequence : 1000);
-    res.status(200).json({ status: true });
-  });
+  // app.get("/blink/:sequence?", async (req, res) => {
+  //   let milisec = req.params.sequence != undefined ? req.params.sequence : 800;
+  //   let nIntervId = setInterval(() => {
+  //     rgb.toggle();
+  //   }, 1000);
+  //   setTimeout(() => {
+  //     clearInterval(nIntervId);
+  //   }, milisec * 1000);
+  //   res.status(200).json({ status: true });
+  // });
 
   //   app.get("/power/:status", async (req, res) => {
   //     console.log(req.params.status);

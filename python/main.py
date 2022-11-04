@@ -43,20 +43,22 @@ def color_display(e):
         # p_queue
         # send("programming a sequence")
     else:
+        # if e.target.value != 'blink' and e.target.value != 'rainbow':
+        send(f'send color:{e.target.value}', users['auto'])
+        aio.run(send_command(f'{w.location.href}color/{e.target.value}'))
+        # elif e.target.value == 'blink':
+        # else:
+        # print(f'{w.location.href}{e.target.value}')
+        #     send(f'make it blink')
+        #     aio.run(send_command(f'{w.location.href}{e.target.value}'))
 
-        if e.target.value != 'blink' and e.target.value != 'rainbow':
-            send(f'send color:{e.target.value}', users['auto'])
-            aio.run(send_command(f'{w.location.href}color/{e.target.value}'))
-        elif e.target.value == 'blink':
-            send(f'make it blink')
-            aio.run(send_command(f'{w.location.href}{e.target.value}'))
         # elif e.target.value == 'rainbow':
         #     print("here")
         #     send(f'send color:{e.target.value}')
         #     aio.run(send_command(f'{w.location.href}{e.target.value}'))
 
     # send(j('#head').val() + ' send color')
-      # get the value of the button
+  # get the value of the button
     # j("body").css("background-color", j('#head').val())
 
 
@@ -106,20 +108,20 @@ def fire_em_up(e):
     j('#programing').prop("checked", False)
     # send("ended a secuence and executed it")
     aio.run(list_execution())
-    queue_template.append()
-    # queue.clear()
-    send("executed a sequence")
+    # queue_template.append()
+    # send("executed a sequence")
 
 
 async def list_execution():
     for r in queue:
-        if (r == 'blink'):
-            aio.run(send_command(f'{w.location.href}{r}'))
-            pass
-        elif (r == 'rainbow'):
-            aio.run(send_command(f'{w.location.href}{r}'))
-        else:
-            aio.run(send_command(f'{w.location.href}color/{r}'))
+        aio.run(send_command(f'{w.location.href}color/{r}'))
+        # if (r == 'blink'):
+        #     aio.run(send_command(f'{w.location.href}{r}'))
+        #     pass
+        # elif (r == 'rainbow'):
+        #     aio.run(send_command(f'{w.location.href}{r}'))
+        # else:
+
         await aio.sleep(2)
 
 
@@ -162,7 +164,6 @@ def send_chatt_message(e):
 
 
 async def send_command(url):
-    print(url)
     response = await (await fetch(url)).json()
     log(response)
 
