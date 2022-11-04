@@ -146,7 +146,7 @@ def handle_connection(e):
     if (check_name is not True):
         name = f'{name}_{random.randint(0, 9000)}'
         check_name = check_storage(name)
-    #     connect(room, name, action_cb)
+        connect(room, name, action_cb)
     connect(room, name, chatt_cb)
     users['chatt'] = name
 
