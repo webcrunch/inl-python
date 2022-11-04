@@ -94,17 +94,11 @@ def connect(channel, user, handler):
 
 
 def send(message, user):
-    print(tokenD[user], user, token, "hello everybody")
     fetch(f'{serverURL}/api/send/{tokenD[user]}', {
         'headers': {'Content-Type': 'application/json'},
         'method': 'POST',
         'body': JSON.stringify({'message': message})
     })
-
-
-def send_get(serverURL):
-    print(serverURL)
-    fetch(f'localhost:5000/test')
 
 
 def send_url(url, message):
