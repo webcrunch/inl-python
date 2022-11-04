@@ -69,17 +69,28 @@ const server = (rgb) => {
   //   // let words = rgb.blink();
   //   res.json(true);
   // });
-
   // app.get("/blink/:sequence?", async (req, res) => {
-  //   let milisec = req.params.sequence != undefined ? req.params.sequence : 800;
-  //   let nIntervId = setInterval(() => {
-  //     rgb.toggle();
-  //   }, 1000);
-  //   setTimeout(() => {
-  //     clearInterval(nIntervId);
-  //   }, milisec * 1000);
+  //   for (let i = req.params.sequence * 2; i >= 0; i--) {
+  //     // let milisec = req.params.sequence != undefined ? req.params.sequence : 800;
+  //     // let nIntervId = setInterval(() => {
+  //     //   rgb.toggle();
+  //     // }, 1000);
+  //     // rgb.toggle();
+  //     // console.log(i);
+  //     // sleep(500);
+  //     blink(500);
+  //   }
+
   //   res.status(200).json({ status: true });
   // });
+
+  const sleep = (ms) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
+
+  const blink = (ms) => {
+    return sleep(ms).then(rgb.toggle());
+  };
 
   //   app.get("/power/:status", async (req, res) => {
   //     console.log(req.params.status);
@@ -99,9 +110,9 @@ board.on("ready", () => {
   //   const rgb = new five.Led.RGB([6, 5, 3]);
   const rgb = new five.Led.RGB({
     pins: {
-      red: 3,
+      red: 6,
       green: 5,
-      blue: 6,
+      blue: 3,
     },
   });
 
