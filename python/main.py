@@ -139,11 +139,6 @@ def check_storage(name):
             return True
 
 
-# def on_message(timestamp, user, message):
-#     print(timestamp, user, message)
-#     write_log(timestamp, message)
-
-
 def handle_connection(e):
     name = j('#name').val()
     room = j('#room').val()
@@ -184,7 +179,6 @@ def main_connect(e):
 
 j(document).ready(main_connect)
 j('#programing').on('click', check_checkBox)
-# init_button.on('click', main_connect)
 action_from_buttons.on('click', color_display)
 chatt_button.on('click', set_a_log_test)
 enter_room.on('click', handle_connection)
