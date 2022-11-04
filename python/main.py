@@ -158,7 +158,6 @@ def send_chatt_message(e):
 
 async def send_command(url):
     response = await (await fetch(url)).json()
-    log(response)
 
 
 def main_connect(e):
@@ -184,10 +183,6 @@ chatt_button.on('click', set_a_log_test)
 enter_room.on('click', handle_connection)
 queue_button.on('click', fire_em_up)
 send_chatt_message_button.on('click', send_chatt_message)
-
-
-def log(string):
-    w.console.log(string)
 
 
 async def send_get_Data(url):
