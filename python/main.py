@@ -64,7 +64,6 @@ def color_display(e):
 
 def write_log(time, user, message):
     time_string = timestamp_to_iso(time)
-    # print('time:', time, 'user:', user, 'message:', message)
     log_template.append(f'<li>{message}({time_string})</li>') if user is 'system' else log_template.append(
         f'<li>User {user} has {message} ({time_string})</li>')
 
@@ -106,10 +105,9 @@ def check_checkBox(e):
 def fire_em_up(e):
     # uncheck the checkbox
     j('#programing').prop("checked", False)
-    # send("ended a secuence and executed it")
     aio.run(list_execution())
-    # queue_template.append()
-    # send("executed a sequence")
+    queue_template.append()
+    send("executed a sequence")
 
 
 async def list_execution():
