@@ -8,6 +8,38 @@
   display: none;
 }
 
+.disclosedRoom {
+  display: none;
+}
+
+.init {
+  display: flex;
+}
+
+.display_button_unconnect {
+  display: none;
+}
+
+#color_action {
+  display: none;
+}
+
+#chatt {
+  display: none;
+}
+
+#action_log {
+  display: none;
+}
+
+.displayButton {
+  display: none;
+}
+
+#programming_queue {
+  display: none;
+}
+
 .hidden {
   visibility: hidden;
 }

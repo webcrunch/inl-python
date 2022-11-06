@@ -20,7 +20,7 @@ log_template = j('.loggs')
 queue_template = j('.p_queue')
 chat_template = j('.chat_logs')
 init_button = j('.init')
-delete_connection = j('.display_button_unconnect')
+close_connection = j('.display_button_unconnect')
 connect_to_room = j('.enter_room')
 chatt_button = j('.chatt')
 enter_room = j('.enter_chatt')
@@ -66,12 +66,16 @@ def action_cb(time, user, message):
     message = message.replace('\'', '')
     message = message.split("½")
     if (len(message) == 2):
+        message = ''.join(message[0])
         chat_template.append(f'<li>{message}({timestamp_to_iso(time)})</li>') if user is 'system' else chat_template.append(
             f'<li>{user} has written: {message} ({timestamp_to_iso(time)})</li>')
-    write_log(time=time, message=message, user=user)
+    else:
+        message = ''.join(message[0])
+        write_log(time=time, message=message, user=user)
 
 
 def display_connection(e):
+    global disclosed_room
     disclosed_room.toggle(200)  # .css("display", "flex")
 
 
@@ -85,7 +89,7 @@ def fire_em_up(e):
     prgramming_button.prop("checked", False)
     aio.run(list_execution())
     queue_template.append()
-    send("executed a sequence")
+    send("execute-d a sequence")
 
 
 async def list_execution():
@@ -111,9 +115,19 @@ def check_storage(name):
 
 
 def delete_connection(e):
+    global close_connection
+    global init_button
     close()
-    j('.display_button_unconnect').css("display", "none")
-    j('.init').css("display", "flex")
+    close_connection.css("display", "none")
+    init_button.css("display", "flex")
+    close_all_componenets()
+
+
+def close_all_componenets():
+    color_action_display.css("display", "none")
+    chatt_display.css("display", "none")
+    action_log_display.css("display", "none")
+    programming_queue_display.css("display", "none")
 
 
 def send_chatt_message(e):
@@ -126,6 +140,14 @@ async def send_command(url):
 
 
 def main_connect(e):
+    global close_connection
+    global init_button
+    global disclosed_room
+    global user_display
+    global color_action_display
+    global chatt_display
+    global action_log_display
+    global programming_queue_display
     name = j('#name').val()
     room = j('#room').val()
     check_name = check_storage(name)
@@ -135,14 +157,13 @@ def main_connect(e):
         connect(room, name, action_cb)
     else:
         connect(room, name, action_cb)
-    delete_connection.css("display", "flex")
+
+    close_connection.css("display", "flex").text(f'Close the room: {room}')
+    close_all_componenets
     init_button.css("display", "none")
     disclosed_room.css("display", "none")
     user_display.html(f'user:{name}')
-    color_action_display.css("display", "none")
-    chatt_display.css("display", "none")
-    action_log_display.css("display", "none")
-    programming_queue_display.css("display", "none")
+
     if (room == 'aurdrino'):
         color_action_display.toggle(200)  # .css("display", "flex")
         chatt_display.toggle(200)
@@ -161,6 +182,7 @@ action_from_buttons.on('click', color_display)
 queue_button.on('click', fire_em_up)
 send_chatt_message_button.on('click', send_chatt_message)
 init_button.on('click', display_connection)
+close_connection.on('click', delete_connection)
 
 
 async def send_get_Data(url):
