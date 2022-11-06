@@ -18,7 +18,6 @@ JSON = w.JSON
 req = ajax.Ajax()
 log_template = j('.loggs')
 queue_template = j('.p_queue')
-users = {'auto': '', 'chatt': ''}
 chat_template = j('.chat_logs')
 init_button = j('.init')
 delete_connection = j('.display_button_unconnect')
@@ -28,6 +27,13 @@ enter_room = j('.enter_chatt')
 queue = []
 queue_button = j('.execute_queue')
 send_chatt_message_button = j('.chatt_message')
+disclosed_room = j('.disclosedRoom')
+user_display = j('.user')
+color_action_display = j('#color_action')
+chatt_display = j('#chatt')
+action_log_display = j('#action_log')
+prgramming_button = j('#programing')
+programming_queue_display = j('#programming_queue')
 
 
 def on_complete(req):
@@ -43,8 +49,6 @@ def color_display(e):
         queue_template.append(
             f'<li>clicked on: <strong>{e.target.value} </strong>  and added it to the queue</li>')
         queue.append(e.target.value)
-        # p_queue
-        # send("programming a sequence")
     else:
         send(f'send color:{e.target.value}')
         aio.run(send_command(f'{w.location.href}color/{e.target.value}'))
@@ -68,7 +72,7 @@ def action_cb(time, user, message):
 
 
 def display_connection(e):
-    j('.disclosedRoom').toggle(200)  # .css("display", "flex")
+    disclosed_room.toggle(200)  # .css("display", "flex")
 
 
 def check_checkBox(e):
@@ -78,7 +82,7 @@ def check_checkBox(e):
 
 def fire_em_up(e):
     # uncheck the checkbox
-    j('#programing').prop("checked", False)
+    prgramming_button.prop("checked", False)
     aio.run(list_execution())
     queue_template.append()
     send("executed a sequence")
@@ -131,30 +135,28 @@ def main_connect(e):
         connect(room, name, action_cb)
     else:
         connect(room, name, action_cb)
-    users['auto'] = name
     delete_connection.css("display", "flex")
     init_button.css("display", "none")
-    j('.disclosedRoom').css("display", "none")
-    j('.user').html(f'user:{name}')
-    j('#color_action').css("display", "none")
-    j('#chatt').css("display", "none")
-    j('#action_log').css("display", "none")
-    j('#programming_queue').css("display", "none")
+    disclosed_room.css("display", "none")
+    user_display.html(f'user:{name}')
+    color_action_display.css("display", "none")
+    chatt_display.css("display", "none")
+    action_log_display.css("display", "none")
+    programming_queue_display.css("display", "none")
     if (room == 'aurdrino'):
-        j('#color_action').toggle(200)  # .css("display", "flex")
-        j('#chatt').toggle(200)
-        j('#action_log').toggle(200)
-        j('#programming_queue').toggle(300)
+        color_action_display.toggle(200)  # .css("display", "flex")
+        chatt_display.toggle(200)
+        action_log_display.toggle(200)
+        programming_queue_display.toggle(300)
 
     else:
-        j('#chatt').toggle(200)
-        j('#action_log').toggle(200)
+        chatt_display.toggle(200)
+        action_log_display.toggle(200)
     w.localStorage.setItem('date', datetime.today().strftime('%Y-%m-%d'))
 
 
-# j(document).ready(main_connect)
 connect_to_room.on('click', main_connect)
-j('#programing').on('click', check_checkBox)
+prgramming_button.on('click', check_checkBox)
 action_from_buttons.on('click', color_display)
 queue_button.on('click', fire_em_up)
 send_chatt_message_button.on('click', send_chatt_message)
