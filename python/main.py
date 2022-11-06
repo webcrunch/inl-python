@@ -20,7 +20,8 @@ log_template = j('.loggs')
 queue_template = j('.p_queue')
 users = {'auto': '', 'chatt': ''}
 chat_template = j('.chat_logs')
-# init_button = j('.init')
+init_button = j('.init')
+connect_to_room = j('.enter_room')
 chatt_button = j('.chatt')
 enter_room = j('.enter_chatt')
 queue = []
@@ -37,6 +38,7 @@ def on_complete(req):
 
 def color_display(e):
     if j('input[name=programing]:checked').length > 0:
+        j('.displayButton').toggle(200)  # .css("display", "flex")
         queue_template.append(
             f'<li>clicked on: <strong>{e.target.value} </strong>  and added it to the queue</li>')
         queue.append(e.target.value)
@@ -93,8 +95,12 @@ def action_cb(time, user, message):
     write_log(time=time, message=message, user=user)
 
 
-def set_a_log_test(e):
+def display_chatt(e):
     j('.disclosed').toggle(200)  # .css("display", "flex")
+
+
+def display_connection(e):
+    j('.disclosedRoom').toggle(200)  # .css("display", "flex")
 
 
 def check_checkBox(e):
@@ -113,13 +119,6 @@ def fire_em_up(e):
 async def list_execution():
     for r in queue:
         aio.run(send_command(f'{w.location.href}color/{r}'))
-        # if (r == 'blink'):
-        #     aio.run(send_command(f'{w.location.href}{r}'))
-        #     pass
-        # elif (r == 'rainbow'):
-        #     aio.run(send_command(f'{w.location.href}{r}'))
-        # else:
-
         await aio.sleep(2)
 
 
@@ -139,20 +138,8 @@ def check_storage(name):
             return True
 
 
-def handle_connection(e):
-    name = j('#name').val()
-    room = j('#room').val()
-    check_name = check_storage(name)
-    if (check_name is not True):
-        name = f'{name}_{random.randint(0, 9000)}'
-        check_name = check_storage(name)
-    connect(room, name, chatt_cb)
-    users['chatt'] = name
-    j('.chatt_user').append(f'user:{name}')
-
-
 def send_chatt_message(e):
-    send(j('#room_message_sender').val(), users['chatt'])
+    send(j('#room_message_sender').val())
     j('#room_message_sender').val("")
 
 
@@ -161,8 +148,8 @@ async def send_command(url):
 
 
 def main_connect(e):
-    name = 'auto_connect_user'
-    room = 'auto_connect'
+    name = j('#name').val()
+    room = j('#room').val()
     check_name = check_storage(name)
     if (check_name is not True):
         name = f'{name}_{random.randint(0, 9000)}'
@@ -170,19 +157,29 @@ def main_connect(e):
         connect(room, name, action_cb)
     else:
         connect(room, name, action_cb)
-
     users['auto'] = name
     j('.user').append(f'user:{name}')
+    print(room)
+    if (room == 'aurdrino'):
+        j('#color_action').toggle(200)  # .css("display", "flex")
+        j('#chatt').toggle(200)
+        j('#action_log').toggle(200)
+        j('programming_queue').toggle(300)
+
+    else:
+        j('#chatt').toggle(200)
+        j('#action_log').toggle(200)
     w.localStorage.setItem('date', datetime.today().strftime('%Y-%m-%d'))
 
 
-j(document).ready(main_connect)
+# j(document).ready(main_connect)
+connect_to_room.on('click', main_connect)
 j('#programing').on('click', check_checkBox)
 action_from_buttons.on('click', color_display)
-chatt_button.on('click', set_a_log_test)
-enter_room.on('click', handle_connection)
+chatt_button.on('click', display_chatt)
 queue_button.on('click', fire_em_up)
 send_chatt_message_button.on('click', send_chatt_message)
+init_button.on('click', display_connection)
 
 
 async def send_get_Data(url):

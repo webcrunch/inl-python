@@ -18,11 +18,36 @@
           </h1>
         </div>
         <div>
+          <button type="button" class="init btn btn-primary">
+            Connect to a room
+          </button>
+          <br />
+          <label for="room" class="disclosedRoom">Room</label><br />
+          <input
+            type="text"
+            class="disclosedRoom"
+            id="room"
+            name="head"
+            value=""
+          /><br />
+          <label for="name" class="disclosedRoom">Name</label><br />
+          <input
+            type="text"
+            class="disclosedRoom"
+            id="name"
+            name="head"
+            value=""
+          />
+          <button class="disclosedRoom enter_room btn btn-primary">
+            Enter the room
+          </button>
+        </div>
+        <div>
           <p class="user d-flex justify-content-right"></p>
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-12 col-md-6">
+        <div id="color_action" class="col-sm-12 col-md-6">
           <div class="col p-2">
             <p>
               <a
@@ -102,6 +127,13 @@
                 >
                   yellow
                 </button>
+                <button
+                  type="button"
+                  class="pressed_button btn btn-primary"
+                  value="red"
+                >
+                  röd
+                </button>
                 <!-- <button
                   type="button"
                   class="pressed_button btn btn-primary"
@@ -127,7 +159,7 @@
             </div>
           </div>
         </div>
-        <div class="col-xs-12 col-md-6">
+        <div id="programming_queue" class="col-xs-12 col-md-6">
           <div class="col">
             <h3>Programming queue:</h3>
             <ul class="p_queue"></ul>
@@ -138,7 +170,7 @@
             </div>
           </div>
         </div>
-        <div class="col-xs-12 col-md-6">
+        <div id="chatt" class="col-xs-12 col-md-6">
           <div class="col p-2">
             <p>
               <a
@@ -154,45 +186,16 @@
             </p>
             <div class="collapse" id="ChattColpasse">
               <div class="card card-body">
-                <button type="button" class="chatt btn btn-primary">
-                  Chatt with others
-                </button>
-                <div>
-                  <label for="room" class="disclosed">Room</label><br />
-                  <input
-                    type="text"
-                    class="disclosed"
-                    id="room"
-                    name="head"
-                    value=""
-                  /><br />
-                  <label for="name" class="disclosed">Name</label><br />
-                  <input
-                    type="text"
-                    class="disclosed"
-                    id="name"
-                    name="head"
-                    value=""
-                  />
-                  <button class="disclosed enter_chatt btn btn-primary">
-                    Enter the room
-                  </button>
-                </div>
-                <label for="room" class="disclosed_chatt"
+                <label for="room_message_sender"
                   >write a message for the little chatt:</label
                 ><br />
-                <p class="chatt_user d-flex justify-content-right"></p>
                 <input
                   type="text"
-                  class="disclosed_chatt"
                   id="room_message_sender"
                   name="head"
                   value="Write a chatt message here!"
                 />
-                <button
-                  type="button"
-                  class="disclosed_chatt chatt_message btn btn-primary"
-                >
+                <button type="button" class="chatt_message btn btn-primary">
                   Send message
                 </button>
                 <div class="col">
@@ -203,7 +206,7 @@
             </div>
           </div>
         </div>
-        <div class="col-xs-12 col-md-6">
+        <div id="action_log" class="col-xs-12 col-md-6">
           <div class="col">
             <h3>Every actions Log:</h3>
             <ul class="loggs"></ul>
