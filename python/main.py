@@ -21,6 +21,7 @@ queue_template = j('.p_queue')
 users = {'auto': '', 'chatt': ''}
 chat_template = j('.chat_logs')
 init_button = j('.init')
+delete_connection = j('.display_button_unconnect')
 connect_to_room = j('.enter_room')
 chatt_button = j('.chatt')
 enter_room = j('.enter_chatt')
@@ -45,23 +46,8 @@ def color_display(e):
         # p_queue
         # send("programming a sequence")
     else:
-        # if e.target.value != 'blink' and e.target.value != 'rainbow':
-        send(f'send color:{e.target.value}', users['auto'])
+        send(f'send color:{e.target.value}')
         aio.run(send_command(f'{w.location.href}color/{e.target.value}'))
-        # elif e.target.value == 'blink':
-        # else:
-        # print(f'{w.location.href}{e.target.value}')
-        #     send(f'make it blink')
-        #     aio.run(send_command(f'{w.location.href}{e.target.value}'))
-
-        # elif e.target.value == 'rainbow':
-        #     print("here")
-        #     send(f'send color:{e.target.value}')
-        #     aio.run(send_command(f'{w.location.href}{e.target.value}'))
-
-    # send(j('#head').val() + ' send color')
-  # get the value of the button
-    # j("body").css("background-color", j('#head').val())
 
 
 def write_log(time, user, message):
@@ -70,33 +56,15 @@ def write_log(time, user, message):
         f'<li>User {user} has {message} ({time_string})</li>')
 
 
-# def blink_handling(e):
-#     send('pushed the blink button') if j(
-#         'input[name=gradient]:checked').length < 1 else send('pushed the blink button with gradient altered:' + j(".slider").val())
-#     # j("body").css("background-color", j('#head').val())
-
-
-def chatt_cb(time, user, message):
-    user = user.replace('\'', '')
-    message = message.replace('.', ' ')
-    message = message.replace('\'', '')
-    if (j('.disclosed_chatt').css("display") is not 'flex'):
-        j('.disclosed_chatt').css("display", "flex")
-    time_string = timestamp_to_iso(time)
-    chat_template.append(f'<li>{message}({time_string})</li>') if user is 'system' else chat_template.append(
-        f'<li>{user} has written: {message} ({time_string})</li>')
-    write_log(time, user, message)
-
-
 def action_cb(time, user, message):
     user = user.replace('\'', '')
     message = message.replace('.', '')
     message = message.replace('\'', '')
+    message = message.split("½")
+    if (len(message) == 2):
+        chat_template.append(f'<li>{message}({timestamp_to_iso(time)})</li>') if user is 'system' else chat_template.append(
+            f'<li>{user} has written: {message} ({timestamp_to_iso(time)})</li>')
     write_log(time=time, message=message, user=user)
-
-
-def display_chatt(e):
-    j('.disclosed').toggle(200)  # .css("display", "flex")
 
 
 def display_connection(e):
@@ -105,7 +73,7 @@ def display_connection(e):
 
 def check_checkBox(e):
     send('started a sequence ' if j(
-        'input[name=programing]:checked').length > 0 else 'ended a secuence without execute it', users['auto'])
+        'input[name=programing]:checked').length > 0 else 'ended a secuence without execute it')
 
 
 def fire_em_up(e):
@@ -138,8 +106,14 @@ def check_storage(name):
             return True
 
 
+def delete_connection(e):
+    close()
+    j('.display_button_unconnect').css("display", "none")
+    j('.init').css("display", "flex")
+
+
 def send_chatt_message(e):
-    send(j('#room_message_sender').val())
+    send(j('#room_message_sender').val() + "½chatt")
     j('#room_message_sender').val("")
 
 
@@ -158,13 +132,19 @@ def main_connect(e):
     else:
         connect(room, name, action_cb)
     users['auto'] = name
-    j('.user').append(f'user:{name}')
-    print(room)
+    delete_connection.css("display", "flex")
+    init_button.css("display", "none")
+    j('.disclosedRoom').css("display", "none")
+    j('.user').html(f'user:{name}')
+    j('#color_action').css("display", "none")
+    j('#chatt').css("display", "none")
+    j('#action_log').css("display", "none")
+    j('#programming_queue').css("display", "none")
     if (room == 'aurdrino'):
         j('#color_action').toggle(200)  # .css("display", "flex")
         j('#chatt').toggle(200)
         j('#action_log').toggle(200)
-        j('programming_queue').toggle(300)
+        j('#programming_queue').toggle(300)
 
     else:
         j('#chatt').toggle(200)
@@ -176,7 +156,6 @@ def main_connect(e):
 connect_to_room.on('click', main_connect)
 j('#programing').on('click', check_checkBox)
 action_from_buttons.on('click', color_display)
-chatt_button.on('click', display_chatt)
 queue_button.on('click', fire_em_up)
 send_chatt_message_button.on('click', send_chatt_message)
 init_button.on('click', display_connection)
