@@ -2,62 +2,42 @@ import path from "path";
 import express from "express";
 import five from "johnny-five";
 const board = new five.Board({ port: "COM5" });
-const color_dict = {
-  black: "#ffffff",
-  white: "#000000",
-  green: "#ff00ff",
-  red: "#00ffff",
-  blue: "#ffff00",
-  purple: "#00ff00",
-  yellow: "#ff0000",
-  // cyan: { R: 0, G: 0, B: 1 },
-};
-const colors = [
-  "red",
-  "green",
-  "blue",
-  "purple",
-  "yellow",
-  // "cyan",
-  "white",
-  "black",
-];
 const app = express();
 app.use(express.json());
 const server = (rgb) => {
   // custom color function is done
   // an check if we sent in hex parameters instead of color name
   app.get("/color/:color", async (req, res) => {
-    if (req.params.color.startsWith("#")) {
-      if (req.params.color.length == 7) {
+    const color = req.params.color;
+    if (color.startsWith("#")) {
+      if (color.length == 7) {
         rgb.color(req.params.color); //3,6,5  cyan: 00ff00,  yellow: ff0000, green: ff00ff
         res.status(200).json({ colorchanged: true });
       } else res.status(404).json({ error: "Bad color insertion." });
-    } else if (!colors.includes(req.params.color))
+    } else if (!color.includes(req.params.color))
       res.status(404).json({ error: "not the right color." });
     else {
-      rgb.color(color_dict[req.params.color]); //3,6,5  cyan: 00ff00,  yellow: ff0000, green: ff00ff
-      res.status(200).json({ colorchanged: true });
+      if (color.length == 6) {
+        rgb.color(`"#"${req.params.color}`); //3,6,5  cyan: 00ff00,  yellow: ff0000, green: ff00ff
+        res.status(200).json({ colorchanged: true });
+      } else res.status(404).json({ error: "not the right color code." });
     }
-
-    //     # 6,5 RED
-    // # 3,6 GREEN
-    // # 3,5 BLUE
-    // # 5 PURPLE
-    // # 6 YELLOW
-    // # 3 CYAN
-    // # 0,0,0 WHITE
-    // # 1,1,1 BLACK
   });
 
+  function padZero(str, len) {
+    len = len || 2;
+    const zeros = new Array(len).join("0");
+    return (zeros + str).slice(-len);
+  }
+
   app.get("/off", (req, res) => {
-    rgb.toggle();
+    rgb.off();
     res.status(200).json({ data: "off" });
   });
 
   app.get("/on", (req, res) => {
     // rgb.color(color_dict["white"]);
-    rgb.toggle();
+    rgb.on();
     res.status(200).json(true);
   });
 
@@ -107,13 +87,14 @@ const server = (rgb) => {
 
 board.on("ready", () => {
   console.log("board ready ");
-  //   const rgb = new five.Led.RGB([6, 5, 3]);
+  //const rgb = new five.Led.RGB([3, 5, 6]);
   const rgb = new five.Led.RGB({
     pins: {
-      red: 6,
+      red: 3,
       green: 5,
-      blue: 3,
+      blue: 6,
     },
+    isAnode: true,
   });
 
   server(rgb);
