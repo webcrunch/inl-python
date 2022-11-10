@@ -4,6 +4,10 @@
   display: none;
 }
 
+li {
+  text-decoration: double;
+}
+
 .disclosed_chatt {
   display: none;
 }
