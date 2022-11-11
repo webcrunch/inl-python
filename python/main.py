@@ -54,8 +54,8 @@ def color_display(e):
         queue.append(e.target.value)
     else:
         # send(f'send color:{e.target.title}')
-        if (e.target.title == 'custom color'):
-            if (bool(color_catcher_text.val().strip())):
+        if e.target.title == 'custom color':
+            if bool(color_catcher_text.val().strip()):
                 send(f'send color :{e.target.title} input')
                 color = color_catcher_text.val().strip()
                 aio.run(send_command(
@@ -116,8 +116,7 @@ async def list_execution():
 
 def check_storage(name):
 
-    if (w.localStorage.getItem('usernames') ==
-            None or w.localStorage.getItem('usernames') == ''):
+    if w.localStorage.getItem('usernames') == None or w.localStorage.getItem('usernames') == '':
         users = name
         w.localStorage.setItem('usernames', users)
         return True
