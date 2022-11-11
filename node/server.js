@@ -14,11 +14,9 @@ const server = (rgb) => {
         rgb.color(req.params.color); //3,6,5  cyan: 00ff00,  yellow: ff0000, green: ff00ff
         res.status(200).json({ colorchanged: true });
       } else res.status(404).json({ error: "Bad color insertion." });
-    } else if (!color.includes(req.params.color))
-      res.status(404).json({ error: "not the right color." });
-    else {
+    } else {
       if (color.length == 6) {
-        rgb.color(`"#"${req.params.color}`); //3,6,5  cyan: 00ff00,  yellow: ff0000, green: ff00ff
+        rgb.color(`#${req.params.color}`); //3,6,5  cyan: 00ff00,  yellow: ff0000, green: ff00ff
         res.status(200).json({ colorchanged: true });
       } else res.status(404).json({ error: "not the right color code." });
     }
