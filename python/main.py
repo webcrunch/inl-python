@@ -34,6 +34,9 @@ chatt_display = j('#chatt')
 action_log_display = j('#action_log')
 prgramming_button = j('#programing')
 programming_queue_display = j('#programming_queue')
+color_catcher_input = j('#color_catcher')
+color_button = j('#color_input_button')
+color_catcher_text = j('#color_catcher_text')
 
 
 def on_complete(req):
@@ -50,8 +53,21 @@ def color_display(e):
             f'<li>clicked on: <strong>{e.target.value} </strong>  and added it to the queue</li>')
         queue.append(e.target.value)
     else:
-        send(f'send color:{e.target.value}')
-        aio.run(send_command(f'{w.location.href}color/{e.target.value}'))
+        # send(f'send color:{e.target.title}')
+        if (e.target.title == 'custom color'):
+            if (bool(color_catcher_text.val().strip())):
+                send(f'send color :{e.target.title} input')
+                color = color_catcher_text.val().strip()
+                aio.run(send_command(
+                    f'{w.location.href}color/{color}'))
+                color_catcher_text.val("")
+            else:
+                send(f'send color: {e.target.title}')
+                aio.run(send_command(
+                    f'{w.locacolor_catcher_texttion.href}color/{e.target.value}'))
+        else:
+            send(f'send color: {e.target.title}')
+            aio.run(send_command(f'{w.location.href}color/{e.target.value}'))
 
 
 def write_log(time, user, message):
@@ -120,6 +136,7 @@ def delete_connection(e):
     close()
     close_connection.css("display", "none")
     init_button.css("display", "flex")
+    user_display.html()
     close_all_componenets()
 
 
@@ -164,7 +181,7 @@ def main_connect(e):
     disclosed_room.css("display", "none")
     user_display.html(f'user:{name}')
 
-    if (room == 'aurdrino'):
+    if (room == 'arduino'):
         color_action_display.toggle(200)  # .css("display", "flex")
         chatt_display.toggle(200)
         action_log_display.toggle(200)
@@ -176,6 +193,10 @@ def main_connect(e):
     w.localStorage.setItem('date', datetime.today().strftime('%Y-%m-%d'))
 
 
+def set_value_to_button(e):
+    color_button.val(color_catcher_input.val()[1:])
+
+
 connect_to_room.on('click', main_connect)
 prgramming_button.on('click', check_checkBox)
 action_from_buttons.on('click', color_display)
@@ -183,6 +204,8 @@ queue_button.on('click', fire_em_up)
 send_chatt_message_button.on('click', send_chatt_message)
 init_button.on('click', display_connection)
 close_connection.on('click', delete_connection)
+color_catcher_input.change(set_value_to_button)
+# color_catcher_text.change(set_value_to_button)
 
 
 async def send_get_Data(url):

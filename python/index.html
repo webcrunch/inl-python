@@ -160,26 +160,34 @@
                 >
                   purple
                 </button>
-                    <label for="head">Pick anther color:</label>
-                <input type="color" id="color_catcher" name="Pick new color"
-           value="#ffffff">
-           <button
+                <label for="head">Pick anther color:</label>
+                <input
+                  type="color"
+                  id="color_catcher"
+                  name="Pick new color"
+                  value="#ffffff"
+                />
+                <label for="color_catcher_text"
+                  >Insert own hex code/color here( without the #)</label
+                >
+                <input type="text" min="6" id="color_catcher_text" />
+                <button
                   type="button"
-                  if="color_input_button"
-                  value="green"
+                  id="color_input_button"
+                  value=""
+                  title="custom color"
                   class="pressed_button btn btn-primary"
                 >
-                Use this color
+                  Use this color
                 </button>
-</div>
-                <!-- <button
+              </div>
+              <!-- <button
                     type="button"
                     class="pressed_button btn btn-primary"
                     value="rainbow"
                   >
                     cykle through the rainbow colors
                   </button> -->
-              </div>
             </div>
           </div>
         </div>
